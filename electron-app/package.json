@@ -1,0 +1,60 @@
+{
+  "name": "thinking-zone",
+  "productName": "Thinking Zone",
+  "version": "1.0.0",
+  "description": "A focused thinking and note-taking dashboard",
+  "main": "main.js",
+  "author": "Imtiyaz Ali",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder --mac --arm64",
+    "build:zip": "electron-builder --mac zip --arm64",
+    "build:dmg": "electron-builder --mac dmg --arm64",
+    "pack": "electron-builder --dir --arm64"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^34.0.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.imtiyaz.thinking-zone",
+    "productName": "Thinking Zone",
+    "copyright": "Copyright © 2025 Imtiyaz Ali",
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": [
+        { "target": "zip", "arch": ["arm64"] }
+      ],
+      "icon": "assets/icon.png",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "assets/entitlements.mac.plist",
+      "entitlementsInherit": "assets/entitlements.mac.plist",
+      "darkModeSupport": true
+    },
+    "dmg": {
+      "title": "Thinking Zone",
+      "icon": "assets/icon.png",
+      "backgroundColor": "#f8fafc",
+      "window": {
+        "width": 640,
+        "height": 400
+      }
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "ThinkDashboard.html",
+      "quick-capture.html",
+      "assets/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    }
+  }
+}

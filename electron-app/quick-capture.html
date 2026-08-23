@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    :root {
+      --bg: rgba(255, 255, 255, 0.72);
+      --border: rgba(0, 0, 0, 0.08);
+      --text: #0f172a;
+      --muted: #64748b;
+      --accent: #2563eb;
+      --accent-glow: rgba(37, 99, 235, 0.12);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.02);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: rgba(30, 41, 59, 0.75);
+        --border: rgba(255, 255, 255, 0.08);
+        --text: #f8fafc;
+        --muted: #94a3b8;
+        --accent: #3b82f6;
+        --accent-glow: rgba(59, 130, 246, 0.2);
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.22), 0 1px 3px rgba(0, 0, 0, 0.08);
+      }
+    }
+    body {
+      margin: 0;
+      padding: 8px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      overflow: hidden;
+      background: transparent;
+      user-select: none;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      backdrop-filter: blur(24px) saturate(190%);
+      -webkit-backdrop-filter: blur(24px) saturate(190%);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 14px;
+      box-shadow: var(--shadow);
+      box-sizing: border-box;
+      height: 76px;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .container:focus-within {
+      border-color: var(--accent);
+      box-shadow: var(--shadow), 0 0 0 3px var(--accent-glow);
+    }
+    .input-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+    }
+    .icon {
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse 2.5s infinite ease-in-out;
+    }
+    input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-size: 14.5px;
+      font-weight: 500;
+      padding: 0;
+      margin: 0;
+    }
+    input::placeholder {
+      color: var(--muted);
+      opacity: 0.65;
+    }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      font-size: 9.5px;
+      color: var(--muted);
+      opacity: 0.65;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+    .shortcut {
+      background: rgba(0, 0, 0, 0.04);
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: -apple-system, BlinkMacSystemFont, monospace;
+      font-size: 9px;
+    }
+    @media (prefers-color-scheme: dark) {
+      .shortcut {
+        background: rgba(255, 255, 255, 0.06);
+      }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.85; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="input-row">
+      <div class="icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/>
+          <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/>
+          <path d="M12 5v14"/>
+          <path d="M12 12h6"/>
+          <path d="M12 12H6"/>
+        </svg>
+      </div>
+      <input type="text" id="quickInput" placeholder="Capture a quick idea..." autofocus autocomplete="off">
+    </div>
+    <div class="footer">
+      <div>💡 Thinking Zone Inbox</div>
+      <div>press <span class="shortcut">↵</span> to capture • <span class="shortcut">esc</span> to close</div>
+    </div>
+  </div>
+  <script>
+    const input = document.getElementById('quickInput');
+    
+    // Auto-focus input when window is active
+    window.addEventListener('focus', () => {
+      input.focus();
+    });
+
+    // Handle keypress events
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const text = input.value.trim();
+        if (text) {
+          window.electronAPI.addQuickCaptureIdea(text);
+          input.value = '';
+        }
+      } else if (e.key === 'Escape') {
+        window.electronAPI.closeQuickCapture();
+      }
+    });
+  </script>
+</body>
+</html>

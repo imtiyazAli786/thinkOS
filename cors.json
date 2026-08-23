@@ -1,0 +1,24 @@
+[
+  {
+    "origin": [
+      "https://thinkos.web.app",
+      "https://thinkos.firebaseapp.com",
+      "https://focus-thinking.web.app",
+      "https://focus-thinking.firebaseapp.com",
+      "http://localhost:5000",
+      "http://127.0.0.1:5000",
+      "http://localhost:3000",
+      "*"
+    ],
+    "method": ["GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"],
+    "responseHeader": [
+      "Content-Type",
+      "Authorization",
+      "Content-Length",
+      "User-Agent",
+      "x-goog-resumable",
+      "x-firebase-storage-version"
+    ],
+    "maxAgeSeconds": 3600
+  }
+]

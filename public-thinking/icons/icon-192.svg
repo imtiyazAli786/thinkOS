@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Crisp Light Squircle Background -->
+  <rect width="512" height="512" rx="120" fill="#ffffff" />
+  <rect width="508" height="508" x="2" y="2" rx="118" fill="none" stroke="#e2e8f0" stroke-width="4" />
+
+  <!-- The Exact 4 Outline Rounded Squares from the Views Section in Vibrant Accent Blue (#2563eb / #3b82f6) -->
+  <g fill="none" stroke="#2563eb" stroke-width="32" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="120" y="120" width="115" height="115" rx="30" />
+    <rect x="277" y="120" width="115" height="115" rx="30" />
+    <rect x="120" y="277" width="115" height="115" rx="30" />
+    <rect x="277" y="277" width="115" height="115" rx="30" />
+  </g>
+</svg>
