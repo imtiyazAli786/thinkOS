@@ -1,6 +1,6 @@
 {
-  "name": "thinking-zone",
-  "productName": "Thinking Zone",
+  "name": "thinkos",
+  "productName": "thinkOS",
   "version": "1.0.0",
   "description": "A focused thinking and note-taking dashboard",
   "main": "main.js",
@@ -9,24 +9,38 @@
   "scripts": {
     "start": "electron .",
     "dev": "electron . --dev",
-    "build": "electron-builder --mac --arm64",
+    "build": "electron-builder --dir --mac --arm64",
     "build:zip": "electron-builder --mac zip --arm64",
     "build:dmg": "electron-builder --mac dmg --arm64",
     "pack": "electron-builder --dir --arm64"
   },
-  "dependencies": {},
+  "dependencies": {
+    "7zip-bin": "^5.2.0",
+    "app-builder-bin": "^4.2.0"
+  },
   "devDependencies": {
     "electron": "^34.0.0",
     "electron-builder": "^25.1.8"
   },
   "build": {
-    "appId": "com.imtiyaz.thinking-zone",
-    "productName": "Thinking Zone",
+    "appId": "com.imtiyaz.thinkos",
+    "productName": "thinkOS",
     "copyright": "Copyright © 2025 Imtiyaz Ali",
     "mac": {
       "category": "public.app-category.productivity",
       "target": [
-        { "target": "zip", "arch": ["arm64"] }
+        {
+          "target": "zip",
+          "arch": [
+            "arm64"
+          ]
+        },
+        {
+          "target": "dir",
+          "arch": [
+            "arm64"
+          ]
+        }
       ],
       "icon": "assets/icon.png",
       "hardenedRuntime": true,
@@ -36,7 +50,7 @@
       "darkModeSupport": true
     },
     "dmg": {
-      "title": "Thinking Zone",
+      "title": "thinkOS",
       "icon": "assets/icon.png",
       "backgroundColor": "#f8fafc",
       "window": {
@@ -47,7 +61,10 @@
     "files": [
       "main.js",
       "preload.js",
+      "thinkOS.html",
       "ThinkDashboard.html",
+      "thinkos-ai.css",
+      "thinkos-ai.js",
       "quick-capture.html",
       "assets/**/*",
       "node_modules/**/*"

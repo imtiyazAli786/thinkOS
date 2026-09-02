@@ -47,7 +47,8 @@ function startLocalServer() {
 
       // Check if requested file exists locally (for js, css, png, etc.)
       const cleanUrl = req.url.split('?')[0];
-      const filePath = path.join(__dirname, cleanUrl === '/' || cleanUrl === '/app' ? 'ThinkDashboard.html' : cleanUrl);
+      const defaultDoc = fs.existsSync(path.join(__dirname, 'thinkOS.html')) ? 'thinkOS.html' : 'ThinkDashboard.html';
+      const filePath = path.join(__dirname, cleanUrl === '/' || cleanUrl === '/app' ? defaultDoc : cleanUrl);
       if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
         const ext = path.extname(filePath);
         let contentType = 'text/plain';
@@ -72,8 +73,8 @@ function startLocalServer() {
         return;
       }
 
-      // Always serve ThinkDashboard.html regardless of path to handle "client-side routing"
-      const htmlPath = path.join(__dirname, 'ThinkDashboard.html');
+      // Always serve thinkOS.html / ThinkDashboard.html regardless of path to handle client-side routing
+      const htmlPath = path.join(__dirname, defaultDoc);
       fs.readFile(htmlPath, (err, data) => {
         if (err) {
           res.writeHead(500);
@@ -138,7 +139,7 @@ function createWindow() {
       contextIsolation: true,
       nodeIntegration: false,
       webSecurity: false,
-      partition: 'persist:thinkingzone',
+      partition: 'persist:thinkos',
     },
   });
 
@@ -159,7 +160,21 @@ function createWindow() {
 
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     if (url.includes('accounts.google.com') || url.includes('firebaseapp.com') || url.includes('focused-dashboard-f0639.web.app')) {
-      return { action: 'allow' };
+      return {
+        action: 'allow',
+        overrideBrowserWindowOptions: {
+          parent: mainWindow,
+          modal: false,
+          width: 500,
+          height: 650,
+          autoHideMenuBar: true,
+          webPreferences: {
+            partition: 'persist:thinkos',
+            contextIsolation: true,
+            nodeIntegration: false,
+          }
+        }
+      };
     }
     shell.openExternal(url);
     return { action: 'deny' };
@@ -187,7 +202,7 @@ function buildMenu() {
     ...(isMac ? [{
       label: app.name,
       submenu: [
-        { role: 'about', label: `About Thinking Zone` },
+        { role: 'about', label: `About thinkOS` },
         { type: 'separator' },
         {
           label: 'Preferences…',
@@ -204,7 +219,7 @@ function buildMenu() {
         { role: 'unhide' },
         { type: 'separator' },
         {
-          label: 'Quit Thinking Zone',
+          label: 'Quit thinkOS',
           accelerator: 'CmdOrCtrl+Q',
           click: () => {
             app.explicitQuit = true;
@@ -230,11 +245,12 @@ function buildMenu() {
           click: async () => {
             const { filePath } = await dialog.showSaveDialog(mainWindow, {
               title: 'Export Dashboard',
-              defaultPath: path.join(os.homedir(), 'Desktop', 'ThinkingZone-Export.html'),
+              defaultPath: path.join(os.homedir(), 'Desktop', 'thinkOS-Export.html'),
               filters: [{ name: 'HTML File', extensions: ['html'] }],
             });
             if (filePath) {
-              fs.copyFileSync(path.join(__dirname, 'ThinkDashboard.html'), filePath);
+              const exportSource = fs.existsSync(path.join(__dirname, 'thinkOS.html')) ? path.join(__dirname, 'thinkOS.html') : path.join(__dirname, 'ThinkDashboard.html');
+              fs.copyFileSync(exportSource, filePath);
               shell.showItemInFinder(filePath);
             }
           },
@@ -383,7 +399,7 @@ function createTray(iconImage) {
       return;
     }
     tray = new Tray(iconImage);
-    tray.setToolTip('Thinking Zone — Click to capture ideas');
+    tray.setToolTip('thinkOS — Click to capture ideas');
 
     // Left-click: toggle Quick Capture popup
     tray.on('click', () => {
@@ -404,7 +420,7 @@ function createTray(iconImage) {
 function buildTrayContextMenu() {
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: 'Open Thinking Zone',
+      label: 'Open thinkOS',
       click: () => {
         if (!mainWindow || mainWindow.isDestroyed()) {
           createWindow();
@@ -422,7 +438,7 @@ function buildTrayContextMenu() {
     },
     { type: 'separator' },
     {
-      label: 'Quit Thinking Zone',
+      label: 'Quit thinkOS',
       click: () => {
         app.explicitQuit = true;
         app.quit();

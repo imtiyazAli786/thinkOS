@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env bash
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
@@ -7,8 +7,10 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 OUT_THINKING="$SCRIPT_DIR/public-thinking"
 
 # Ensure directories exist
-mkdir -p "$OUT_DIR"
 mkdir -p "$OUT_THINKING"
+if [ -w "$ROOT_DIR" ]; then
+  mkdir -p "$OUT_DIR" 2>/dev/null || true
+fi
 
 # Copy the Thinking Zone as index in public-thinking/ for Firebase Hosting
 cp "$SCRIPT_DIR/thinkOS.html" "$OUT_THINKING/index.html"
@@ -18,6 +20,7 @@ cp "$SCRIPT_DIR/thinkos-ai.js" "$OUT_THINKING/thinkos-ai.js"
 
 # Copy to electron-app/ directory for local development
 if [ -d "$SCRIPT_DIR/electron-app" ]; then
+  cp "$SCRIPT_DIR/thinkOS.html" "$SCRIPT_DIR/electron-app/thinkOS.html" 2>/dev/null || true
   cp "$SCRIPT_DIR/thinkOS.html" "$SCRIPT_DIR/electron-app/ThinkDashboard.html" 2>/dev/null || true
   cp "$SCRIPT_DIR/thinkos-ai.css" "$SCRIPT_DIR/electron-app/thinkos-ai.css" 2>/dev/null || true
   cp "$SCRIPT_DIR/thinkos-ai.js" "$SCRIPT_DIR/electron-app/thinkos-ai.js" 2>/dev/null || true
