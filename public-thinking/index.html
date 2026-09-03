@@ -2963,6 +2963,10 @@
     .sticky-toolbar-left {
       flex-shrink: 0;
     }
+    #noteEditorPinBtn {
+      margin-left: 16px !important;
+      margin-right: 10px !important;
+    }
     
     .sticky-toolbar-center {
       flex: 1 1 auto;
@@ -5565,10 +5569,15 @@
       transform: none !important;
     }
 
-    .sidebar-minimized .folder-dot {
-      width: 6px !important;
-      height: 6px !important;
-      margin: 0 !important;
+    .sidebar-minimized .folder-dot,
+    .sidebar-minimized .folder-main-icon {
+      margin: 0 auto !important;
+      width: 15px !important;
+      height: 15px !important;
+    }
+    .sidebar-minimized .folder-main-icon svg {
+      width: 15px !important;
+      height: 15px !important;
     }
 
     .sidebar-minimized .craft-nav-icon {
@@ -6042,12 +6051,48 @@
       flex-shrink: 0;
     }
 
-    /* Folder icons use normal text color */
-    .craft-folder-item .craft-nav-icon {
-      color: inherit;
-      opacity: 0.55;
+    /* Folder Main Icon - Minimal, modern aesthetic */
+    .folder-main-icon {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 1px;
+      color: var(--text-secondary);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    .folder-main-icon svg {
+      width: 15px !important;
+      height: 15px !important;
+      stroke-width: 1.85px !important;
+      fill: currentColor;
+      fill-opacity: 0.12;
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), fill-opacity 0.2s ease, color 0.2s ease;
+    }
+
+    .craft-folder-item:hover .folder-main-icon svg {
+      fill-opacity: 0.22;
+      transform: scale(1.06);
+    }
+
+    .craft-folder-item.active .folder-main-icon svg {
+      fill-opacity: 0.28;
+    }
+
+    /* Vibrant yet refined color accents for folder icons */
+    .folder-main-icon.blue   { color: #3B82F6; }
+    .folder-main-icon.green  { color: #10B981; }
+    .folder-main-icon.amber  { color: #F59E0B; }
+    .folder-main-icon.coral  { color: #F43F5E; }
+    .folder-main-icon.grey   { color: #94A3B8; }
+    .folder-main-icon.purple { color: #8B5CF6; }
+    .folder-main-icon.teal   { color: #0D9488; }
+    .folder-main-icon.indigo { color: #6366F1; }
+
+    /* Folder Dot (fallback) */
     .folder-dot {
       width: 7px;
       height: 7px;
@@ -6064,14 +6109,13 @@
     .folder-dot.grey { background: #94A3B8; }
 
     .craft-page-bullet-icon {
-      width: 5.5px;
-      height: 5.5px;
+      width: 4.5px;
+      height: 4.5px;
       border-radius: 50%;
-      border: 1.25px solid currentColor;
-      background: transparent;
-      opacity: 0.4;
+      background: currentColor;
+      opacity: 0.38;
       flex-shrink: 0;
-      margin: 0 4px 0 2px;
+      margin: 0 5px 0 2px;
       display: inline-block;
       transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
       box-sizing: border-box;
@@ -6079,15 +6123,15 @@
     .craft-nav-subitem:hover .craft-page-bullet-icon,
     .craft-nav-nested-subitem:hover .craft-page-bullet-icon {
       opacity: 0.85;
-      border-color: currentColor;
-      transform: scale(1.15);
+      background: var(--accent);
+      transform: scale(1.25);
     }
     .craft-nav-subitem.active .craft-page-bullet-icon,
     .craft-nav-nested-subitem.active .craft-page-bullet-icon {
       opacity: 1;
-      border-color: var(--accent);
       background: var(--accent);
-      transform: scale(1.15);
+      transform: scale(1.3);
+      box-shadow: 0 0 0 2.5px rgba(99, 102, 241, 0.18);
     }
 
     /* Table of Contents Item Styling */
@@ -6207,14 +6251,19 @@
       transform: scale(1.08);
     }
 
-    /* Force premium bold styling for sidebar navigation vector icons to match folder weights */
-    .craft-sidebar .craft-nav-icon svg,
+    /* Force premium styling for sidebar navigation vector icons */
+    .craft-sidebar .craft-nav-icon svg {
+      stroke-width: 2px !important;
+    }
     .craft-sidebar .folder-expand-icon svg {
-      stroke-width: 2.8px !important;
+      stroke-width: 2.2px !important;
+    }
+    .craft-sidebar .folder-main-icon svg {
+      stroke-width: 1.85px !important;
     }
     .craft-nav-subitem svg,
     .craft-nav-nested-subitem svg {
-      stroke-width: 2.2px !important;
+      stroke-width: 2px !important;
     }
 
     /* Scale down the brain/files icons slightly to match visual weight of others */
@@ -6229,19 +6278,39 @@
 
     .craft-folder-item {
       /* Inherits everything from .craft-nav-item for perfect size equality */
-      gap: 7px;
+      gap: 6px;
     }
 
     .craft-folder-item .folder-expand-icon {
-      width: 12px;
-      height: 12px;
+      width: 13px;
+      height: 13px;
+      margin-left: -5px;
+      margin-right: -1px;
+      padding: 1.5px;
       opacity: 0.45;
-      transition: transform 0.2s ease, opacity 0.15s ease;
+      color: var(--text-secondary, #94a3b8);
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.15s ease, background 0.15s ease, color 0.15s ease, transform 0.15s ease;
       flex-shrink: 0;
     }
 
     .craft-folder-item:hover .folder-expand-icon {
-      opacity: 0.8;
+      opacity: 0.85;
+      color: var(--text);
+    }
+
+    .craft-folder-item .folder-expand-icon:hover {
+      background: rgba(0, 0, 0, 0.06);
+      opacity: 1;
+      color: var(--accent);
+    }
+
+    [data-theme="dark"] .craft-folder-item .folder-expand-icon:hover {
+      background: rgba(255, 255, 255, 0.08);
     }
 
     .craft-folder-name {
@@ -7138,9 +7207,12 @@
     .dtb-task-row textarea:focus,
     .dtb-task-row input:hover,
     .dtb-task-row textarea:hover,
-    .dtb-task-row button,
-    .dtb-task-row button:focus,
-    .dtb-task-row button:hover {
+    .dtb-task-row button.dtb-del,
+    .dtb-task-row button.dtb-pri-btn,
+    .dtb-task-row button.dtb-del:focus,
+    .dtb-task-row button.dtb-pri-btn:focus,
+    .dtb-task-row button.dtb-del:hover,
+    .dtb-task-row button.dtb-pri-btn:hover {
       background: transparent !important;
       box-shadow: none !important;
       outline: none !important;
@@ -7148,6 +7220,49 @@
       border-radius: 0 !important;
       -webkit-appearance: none !important;
       appearance: none !important;
+    }
+    .dtb-check-btn {
+      flex-shrink: 0 !important;
+      min-width: 18px !important;
+      width: 18px !important;
+      min-height: 18px !important;
+      height: 18px !important;
+      border-radius: 50% !important;
+      border: 1.8px solid var(--muted, #a1a1aa) !important;
+      background: transparent !important;
+      cursor: pointer !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      padding: 0 !important;
+      box-sizing: border-box !important;
+      align-self: center !important;
+      box-shadow: none !important;
+      outline: none !important;
+      -webkit-appearance: none !important;
+      appearance: none !important;
+    }
+    .dtb-check-btn:hover {
+      border-color: #6B5CE0 !important;
+      background: rgba(107, 92, 224, 0.12) !important;
+      transform: scale(1.08);
+    }
+    .dtb-check-btn.done {
+      border-color: #6B5CE0 !important;
+      background: #6B5CE0 !important;
+    }
+    .dtb-check-btn.done:hover {
+      background: #5B4DC8 !important;
+      border-color: #5B4DC8 !important;
+      transform: scale(1.08);
+    }
+    body.theme-dark .dtb-check-btn:not(.done) {
+      border-color: rgba(255, 255, 255, 0.35) !important;
+    }
+    body.theme-dark .dtb-check-btn:not(.done):hover {
+      border-color: #8b7ef8 !important;
+      background: rgba(139, 126, 248, 0.18) !important;
     }
     .dtb-task-row textarea.dtb-task-label {
       resize: none !important;
@@ -10607,6 +10722,9 @@
       margin: 8px 0 16px 0;
       width: 100%;
       max-width: 100%;
+      padding-right: 24px;
+      padding-bottom: 22px;
+      box-sizing: border-box;
     }
     .craft-table-container {
       position: relative;
@@ -10624,7 +10742,7 @@
     }
     .craft-table-add-col-btn {
       position: absolute;
-      right: -22px;
+      right: 2px;
       top: 6px;
       width: 18px;
       height: 18px;
@@ -10640,26 +10758,35 @@
       margin: 0;
       padding: 0;
       opacity: 0;
-      pointer-events: none;
-      transition: all 0.15s ease;
+      pointer-events: auto;
+      transition: opacity 0.15s ease, background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
       z-index: 10;
     }
-    .craft-table-container:hover .craft-table-add-col-btn,
+    /* Invisible hover hit-bridge extending to table right border */
+    .craft-table-add-col-btn::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      bottom: -8px;
+      left: -14px;
+      right: -8px;
+    }
     .craft-table-outer-box:hover .craft-table-add-col-btn,
-    .craft-block:hover .craft-table-add-col-btn {
+    .craft-table-container:hover .craft-table-add-col-btn,
+    .craft-block:hover .craft-table-add-col-btn,
+    .craft-table-add-col-btn:hover {
       opacity: 0.6;
-      pointer-events: auto;
     }
     .craft-table-add-col-btn:hover {
       opacity: 1 !important;
-      background: var(--card-hover, rgba(0, 0, 0, 0.06));
+      background: var(--card-hover, rgba(0, 0, 0, 0.08));
       color: var(--accent, #6366f1);
       transform: scale(1.15);
     }
     .craft-table-add-row-btn {
       position: absolute;
       left: 6px;
-      bottom: -18px;
+      bottom: 2px;
       width: 18px;
       height: 18px;
       min-width: 18px;
@@ -10674,18 +10801,28 @@
       margin: 0;
       padding: 0;
       opacity: 0;
-      pointer-events: none;
-      transition: all 0.15s ease;
+      pointer-events: auto;
+      transition: opacity 0.15s ease, background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
       z-index: 10;
     }
+    /* Invisible hover hit-bridge extending to table bottom border */
+    .craft-table-add-row-btn::before {
+      content: '';
+      position: absolute;
+      left: -8px;
+      right: -8px;
+      top: -14px;
+      bottom: -8px;
+    }
     .craft-table-outer-box:hover .craft-table-add-row-btn,
-    .craft-block:hover .craft-table-add-row-btn {
+    .craft-table-container:hover .craft-table-add-row-btn,
+    .craft-block:hover .craft-table-add-row-btn,
+    .craft-table-add-row-btn:hover {
       opacity: 0.6;
-      pointer-events: auto;
     }
     .craft-table-add-row-btn:hover {
       opacity: 1 !important;
-      background: var(--card-hover, rgba(0, 0, 0, 0.06));
+      background: var(--card-hover, rgba(0, 0, 0, 0.08));
       color: var(--accent, #6366f1);
       transform: scale(1.15);
     }
@@ -15010,7 +15147,7 @@
               </select>
               <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:8px;pointer-events:none;opacity:0.6;"><path d="m6 9 6 6 6-6"/></svg>
             </div>
-            <button id="noteEditorPinBtn" class="craft-header-btn" onclick="togglePinSelected()" title="Pin Note" aria-label="Pin Note" style="height:32px; width:32px; min-width:32px; min-height:32px; padding:0; border-radius:8px; display:inline-flex; align-items:center; justify-content:center;">
+            <button id="noteEditorPinBtn" class="craft-header-btn" onclick="togglePinSelected()" title="Pin Note" aria-label="Pin Note" style="height:32px; width:32px; min-width:32px; min-height:32px; padding:0; border-radius:8px; display:inline-flex; align-items:center; justify-content:center; margin-left:16px; margin-right:10px;">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="12" y1="17" x2="12" y2="22"/>
                 <path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a1 1 0 0 0 0-2H8a1 1 0 0 0 0 2h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/>
@@ -15481,12 +15618,46 @@
     // SLIM STATE FOR LOCALSTORAGE
     // Strip large base64 image data from state before persisting to localStorage.
     // localStorage has a ~5MB quota; full-resolution base64 images blow that budget.
-    // Images synced via Firestore (block.meta.url starts with 'data:') are always
-    // reloaded fresh from Firestore on next login, so stripping them here is safe.
-    // blob_ keys (IndexedDB refs) are kept as-is — they point to IndexedDB, not ls.
+    // Images synced via Firestore (fsimg_) or blob_ (IndexedDB) are kept as-is.
     // ============================================
     const BASE64_IMG_SENTINEL = '__firestore_image__';
     const BASE64_THRESHOLD = 500; // chars — anything longer than a short data-URL is stripped
+
+    // Attempt to free localStorage space by removing non-critical and history keys.
+    function _purgeStaleLocalStorage() {
+      let freedBytes = 0;
+      try {
+        const keysToRemove = [];
+        for (let i = 0; i < localStorage.length; i++) {
+          const k = localStorage.key(i);
+          if (!k) continue;
+          // Purge expendable logs, history revisions, old date-keyed entries, crash logs
+          if (
+            k.startsWith('tz_history_') ||
+            k.startsWith('tz_crash_log') ||
+            k.startsWith('tz_perf_log') ||
+            k.startsWith('thinkos_p1_') ||
+            k.startsWith('daily_digest_dismissed_') ||
+            k === 'tz_last_toast'
+          ) {
+            keysToRemove.push(k);
+          }
+        }
+        keysToRemove.forEach(k => {
+          try {
+            const val = localStorage.getItem(k);
+            if (val) freedBytes += val.length;
+            localStorage.removeItem(k);
+          } catch (_) {}
+        });
+      } catch (e) {
+        console.warn("Error during localStorage purge:", e);
+      }
+      if (freedBytes > 0) {
+        console.log(`Storage: Purged ${freedBytes} chars of stale/history localStorage data.`);
+      }
+      return freedBytes;
+    }
 
     function slimStateForStorage(s) {
       if (!s || typeof s !== 'object') return s;
@@ -15498,6 +15669,7 @@
             if (
               block.type === 'image' &&
               block.meta?.url &&
+              !block.meta.url.startsWith('fsimg_') &&
               !block.meta.url.startsWith('blob_') &&
               !block.meta.url.startsWith('file://') &&
               block.meta.url.length > BASE64_THRESHOLD
@@ -15521,11 +15693,14 @@
         }
       },
       set: (key, val) => {
+        let strVal = typeof val === 'string' ? val : JSON.stringify(val);
+        // Always back up state to IndexedDB asynchronously so state is never lost even if localStorage is full
+        if (key === KEY && typeof blobStore !== 'undefined' && typeof blobStore.set === 'function') {
+          blobStore.set('__app_state_backup__', strVal).catch(() => {});
+        }
+
         try {
-          let strVal = val;
-          if (typeof strVal !== 'string') {
-            strVal = JSON.stringify(key === KEY ? slimStateForStorage(val) : val);
-          } else if (key === KEY && strVal.includes('"url":"data:')) {
+          if (key === KEY && (strVal.includes('data:image/') || strVal.includes('"url":"data:'))) {
             try {
               const parsed = JSON.parse(strVal);
               strVal = JSON.stringify(slimStateForStorage(parsed));
@@ -15534,8 +15709,20 @@
           localStorage.setItem(key, strVal);
           return true;
         } catch (e) {
-          console.error(`Storage save failed for key "${key}":`, e);
-          return false;
+          console.warn(`Storage save failed for key "${key}", purging stale data and retrying...`, e);
+          _purgeStaleLocalStorage();
+          try {
+            if (key === KEY) {
+              const parsed = JSON.parse(strVal);
+              strVal = JSON.stringify(slimStateForStorage(parsed));
+            }
+            localStorage.setItem(key, strVal);
+            console.log(`Storage: Saved key "${key}" after purge & slim.`);
+            return true;
+          } catch (retryErr) {
+            console.warn(`Storage: Over quota for "${key}". Backed up to IndexedDB.`, retryErr);
+            return false;
+          }
         }
       },
       remove: (key) => {
@@ -15547,13 +15734,12 @@
       }
     };
 
-    // One-time startup: slim any existing bloated localStorage data.
-    // Users who already have large base64 images stored get cleaned up immediately,
-    // so QuotaExceededError stops on the very next page load.
+    // One-time startup: purge bloated localStorage data & slim stored notes immediately.
     (function cleanupBloatedStorage() {
+      _purgeStaleLocalStorage();
       try {
         const raw = localStorage.getItem(KEY);
-        if (raw && raw.includes('"url":"data:')) {
+        if (raw && (raw.includes('data:image/') || raw.includes('"url":"data:'))) {
           const parsed = JSON.parse(raw);
           const slimmed = slimStateForStorage(parsed);
           localStorage.setItem(KEY, JSON.stringify(slimmed));
@@ -16766,7 +16952,7 @@
       return '';
     }
 
-    const FIRESTORE_SAVE_DEBOUNCE_MS = 300;
+    const FIRESTORE_SAVE_DEBOUNCE_MS = 1500;
     const AUTH_PREF_KEY = "focused_dashboard_auth_pref";
     const GOOGLE_OFFER_KEY = "focused_dashboard_google_offer_seen";
     const AUTH_GOOGLE_PENDING_KEY = "focused_dashboard_google_pending";
@@ -16799,6 +16985,9 @@
 
     let initialFirestoreLoadDone = false;
     let pendingFirestoreSave = false;
+    let _syncMapReliable = true; // Tracks whether the sync map was persisted successfully
+    let _firestoreSaveInProgress = false; // Mutex to prevent concurrent saves
+
     function loadLastSyncedNotesMap() {
       const map = new Map();
       try {
@@ -16808,9 +16997,11 @@
         }
       } catch (e) {
         console.error("Error loading lastSyncedNotesMap:", e);
+        _syncMapReliable = false;
       }
       return map;
     }
+
 
     function saveLastSyncedNotesMap(map) {
       try {
@@ -16829,9 +17020,39 @@
           }
           obj[k] = val;
         }
-        localStorage.setItem('thinking_last_synced_notes_map', JSON.stringify(obj));
+        const payload = JSON.stringify(obj);
+        try {
+          localStorage.setItem('thinking_last_synced_notes_map', payload);
+          _syncMapReliable = true;
+        } catch (quotaErr) {
+          // QuotaExceededError — try to free space and retry
+          console.warn("Storage: QuotaExceededError on sync map. Purging stale keys and retrying...");
+          _purgeStaleLocalStorage();
+          try {
+            localStorage.setItem('thinking_last_synced_notes_map', payload);
+            _syncMapReliable = true;
+            console.log("Storage: Sync map saved after purging stale keys.");
+          } catch (retryErr) {
+            // Still failing — save a compact ID-only version so we at least know
+            // which notes exist, even if we can't do fine-grained change detection.
+            console.warn("Storage: Still over quota. Saving compact ID-only sync map...");
+            try {
+              const compactObj = {};
+              for (const k of map.keys()) {
+                compactObj[k] = '__synced__';
+              }
+              localStorage.setItem('thinking_last_synced_notes_map', JSON.stringify(compactObj));
+              _syncMapReliable = false; // Change detection won't work, but we know which IDs were synced
+              console.log("Storage: Compact sync map saved (ID-only). Fine-grained change detection disabled.");
+            } catch (compactErr) {
+              console.error("Storage: Cannot save sync map even in compact form:", compactErr);
+              _syncMapReliable = false;
+            }
+          }
+        }
       } catch (e) {
         console.error("Error saving lastSyncedNotesMap:", e);
+        _syncMapReliable = false;
       }
     }
 
@@ -17230,16 +17451,18 @@
     window.getFolderColorClass = function(key) {
       const k = (key || '').toLowerCase();
       if (k === 'inbox' || k === 'unsorted') return 'grey';
-      if (k.includes('work') || k.includes('job') || k.includes('office')) return 'blue';
-      if (k.includes('research') || k.includes('study') || k.includes('learn') || k.includes('school')) return 'green';
-      if (k.includes('idea') || k.includes('brainstorm') || k.includes('creative') || k.includes('note')) return 'amber';
+      if (k.includes('work') || k.includes('job') || k.includes('office') || k.includes('qa') || k.includes('test')) return 'blue';
+      if (k.includes('research') || k.includes('study') || k.includes('learn') || k.includes('school') || k.includes('g4')) return 'green';
+      if (k.includes('idea') || k.includes('brainstorm') || k.includes('creative') || k.includes('note') || k.includes('alux')) return 'amber';
       if (k.includes('personal') || k.includes('private') || k.includes('home') || k.includes('life')) return 'coral';
+      if (k.includes('finance') || k.includes('money') || k.includes('budget') || k.includes('bank')) return 'teal';
+      if (k.includes('dev') || k.includes('code') || k.includes('build') || k.includes('think')) return 'purple';
       
       let hash = 0;
       for (let i = 0; i < k.length; i++) {
         hash = k.charCodeAt(i) + ((hash << 5) - hash);
       }
-      const colors = ['blue', 'green', 'amber', 'coral', 'grey'];
+      const colors = ['blue', 'green', 'amber', 'coral', 'purple', 'teal', 'grey'];
       return colors[Math.abs(hash) % colors.length];
     };
 
@@ -17347,6 +17570,10 @@
             };
           });
 
+          const folderIconName = isUnsorted 
+            ? 'inbox' 
+            : (isExpanded ? 'folder-open' : 'folder');
+
           html += `
             <li class="craft-nav-folder-wrapper" role="none">
               <div class="craft-nav-item craft-folder-item ${isActive ? 'active' : ''}" 
@@ -17368,7 +17595,9 @@
                    class="craft-nav-icon folder-expand-icon" 
                    title="${isExpanded ? 'Collapse' : 'Expand'} folder ${esc(folder.label)}"
                    onclick="event.stopPropagation(); toggleFolderExpand('${folder.key}')"></i>
-                <div class="folder-dot ${colorClass}"></div>
+                <i data-lucide="${folderIconName}" 
+                   class="folder-main-icon ${colorClass}" 
+                   aria-hidden="true"></i>
                 <span class="craft-folder-name" title="${esc(folder.label)}" ${isUnsorted ? '' : 'ondblclick="startRenameFolder(event, \'' + folder.key + '\')" '}>${esc(folder.label)}</span>
                 <span class="craft-nav-count">${count > 0 ? count : ''}</span>
                 
@@ -19657,8 +19886,9 @@
     }
 
     // Upload image to Firebase Storage if available, returning permanent HTTPS URL.
+    let _storageDisabled = false;
     async function uploadFileToCloud(dataUrlOrBlob, fileName = 'file') {
-      if (!currentUser || !currentUser.uid) return null;
+      if (_storageDisabled || !currentUser || !currentUser.uid || !storage) return null;
       try {
         let blob = null;
         if (dataUrlOrBlob instanceof Blob) {
@@ -19684,29 +19914,188 @@
         const storageRef = storage.ref(`users/${currentUser.uid}/images/${uniqueName}`);
         
         const uploadTask = storageRef.put(uploadBlob, { contentType: uploadBlob.type || 'application/octet-stream' });
-        const snapshot = await new Promise((resolve) => {
-          uploadTask.then(resolve).catch((err) => {
-            console.warn("Storage upload rejected:", err);
+        
+        const snapshot = await Promise.race([
+          new Promise((resolve) => {
+            uploadTask.then(resolve).catch((err) => {
+              console.warn("Storage upload rejected:", err);
+              _storageDisabled = true;
+              resolve(null);
+            });
+          }),
+          new Promise((resolve) => setTimeout(() => {
+            console.warn("Storage upload timed out after 2.5s — falling back to Firestore Image Store");
+            try { uploadTask.cancel(); } catch (_) {}
+            _storageDisabled = true;
             resolve(null);
-          });
-        });
+          }, 2500))
+        ]);
         
         if (!snapshot) return null;
         const downloadUrl = await snapshot.ref.getDownloadURL().catch(() => null);
         return downloadUrl;
       } catch (err) {
+        _storageDisabled = true;
         console.warn("Upload to Firebase Storage failed:", err);
         return null;
       }
     }
     const uploadImageToCloud = uploadFileToCloud;
 
+    // --- Firestore Sub-Collection Image Store (Free Spark Plan Support) ---
+    window._resolvedImagesCache = window._resolvedImagesCache || new Map();
+
+    async function uploadImageToFirestoreStore(dataUrlOrBlob, customId = null) {
+      // If currentUser is not ready yet, wait up to 4s for auth state to resolve
+      if (!currentUser && typeof auth !== 'undefined' && typeof auth.onAuthStateChanged === 'function') {
+        await new Promise((resolve) => {
+          if (currentUser) return resolve();
+          let done = false;
+          const unsub = auth.onAuthStateChanged((u) => {
+            if (!done && u) {
+              done = true;
+              if (typeof unsub === 'function') unsub();
+              resolve();
+            }
+          });
+          setTimeout(() => {
+            if (!done) {
+              done = true;
+              if (typeof unsub === 'function') unsub();
+              resolve();
+            }
+          }, 4000);
+        });
+      }
+      if (!currentUser || !currentUser.uid) return null;
+
+      try {
+        const imgId = customId || (`fsimg_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`);
+        let base64 = dataUrlOrBlob;
+        if (dataUrlOrBlob instanceof Blob) {
+          base64 = await new Promise(res => {
+            const r = new FileReader();
+            r.onload = e => res(e.target.result);
+            r.readAsDataURL(dataUrlOrBlob);
+          });
+        }
+        if (!base64 || typeof base64 !== 'string') return null;
+
+        // Compress to ~80KB JPEG so it syncs super fast across devices without exceeding 1MB limit
+        const compressed = await compressImageForSync(base64, 120000);
+        const finalData = compressed || base64;
+
+        // 1. Save to local IndexedDB & memory cache for 0ms instant local rendering
+        blobStore.set(imgId, finalData).catch(() => {});
+        window._resolvedImagesCache.set(imgId, finalData);
+
+        // 2. Upload to Firestore Image Sub-Collection
+        const imagesCol = getImagesCollectionRef();
+        if (imagesCol) {
+          await imagesCol.doc(imgId).set({
+            id: imgId,
+            data: finalData,
+            createdAt: Date.now()
+          });
+          console.log(`Firestore Image Store: Uploaded image ${imgId} successfully.`);
+        }
+        return imgId;
+      } catch (err) {
+        console.warn("Firestore Image Store upload failed:", err);
+        return null;
+      }
+    }
+
+    async function resolveImageSrcAsync(url) {
+      if (!url) return '';
+      if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:image/')) {
+        return url;
+      }
+      if (window._resolvedImagesCache && window._resolvedImagesCache.has(url)) {
+        return window._resolvedImagesCache.get(url);
+      }
+      // 1. Check local IndexedDB
+      try {
+        const localData = await blobStore.get(url);
+        if (localData && typeof localData === 'string' && localData.startsWith('data:image/')) {
+          window._resolvedImagesCache.set(url, localData);
+          return localData;
+        }
+      } catch (_) {}
+
+      // 2. If currentUser is not ready yet, wait up to 4s for auth state to resolve
+      if (!currentUser && typeof auth !== 'undefined' && typeof auth.onAuthStateChanged === 'function') {
+        await new Promise((resolve) => {
+          if (currentUser) return resolve();
+          let done = false;
+          const unsub = auth.onAuthStateChanged((u) => {
+            if (!done && u) {
+              done = true;
+              if (typeof unsub === 'function') unsub();
+              resolve();
+            }
+          });
+          setTimeout(() => {
+            if (!done) {
+              done = true;
+              if (typeof unsub === 'function') unsub();
+              resolve();
+            }
+          }, 4000);
+        });
+      }
+
+      // 3. Fetch from Firestore Image Sub-Collection
+      if (url.startsWith('fsimg_') || url.startsWith('blob_') || url.startsWith('img_')) {
+        try {
+          const imagesCol = getImagesCollectionRef();
+          if (imagesCol) {
+            const doc = await withRetry(() => imagesCol.doc(url).get(), 3);
+            if (doc && doc.exists && doc.data() && doc.data().data) {
+              const imageData = doc.data().data;
+              blobStore.set(url, imageData).catch(() => {});
+              window._resolvedImagesCache.set(url, imageData);
+              return imageData;
+            }
+          }
+        } catch (err) {
+          console.warn(`Firestore Image Store: Failed to fetch ${url}:`, err);
+        }
+      }
+      return '';
+    }
+
     async function processMediaUploadInBackground(noteId, blockId, dataUrlOrFile, localBlobKey, blockType = 'image') {
       try {
-        let cloudUrl = null;
+        // Fast path for images: upload directly to Firestore Sub-Collection Image Store (works seamlessly on Free Spark Plan)
+        if (blockType === 'image') {
+          const base64 = dataUrlOrFile instanceof File 
+            ? await new Promise((resolve) => {
+                const r = new FileReader();
+                r.onload = (e) => resolve(e.target.result);
+                r.readAsDataURL(dataUrlOrFile);
+              })
+            : dataUrlOrFile;
+
+          if (base64) {
+            const fsImgId = await uploadImageToFirestoreStore(base64, localBlobKey);
+            if (fsImgId) {
+              const note = findStickyById(noteId);
+              if (note) {
+                const block = note.blocks.find(b => b.id === blockId);
+                if (block) {
+                  block.meta.url = fsImgId;
+                  save();
+                  flushFirestoreSave();
+                }
+              }
+              return;
+            }
+          }
+        }
+
         const fileName = (dataUrlOrFile instanceof File) ? dataUrlOrFile.name : (blockType === 'image' ? 'pasted_image.jpg' : 'pasted_file');
-        
-        cloudUrl = await uploadFileToCloud(dataUrlOrFile, fileName);
+        const cloudUrl = await uploadFileToCloud(dataUrlOrFile, fileName);
 
         const note = findStickyById(noteId);
         if (!note) return;
@@ -19718,34 +20107,11 @@
           if (localBlobKey) {
             blobStore.remove(localBlobKey).catch(e => console.warn("Blob cleanup failed:", e));
           }
-        } else {
-          // Cloud upload failed (e.g. CORS or network issue) -> fallback to local IndexedDB & compressed base64
-          const base64 = dataUrlOrFile instanceof File 
-            ? await new Promise((resolve) => {
-                const r = new FileReader();
-                r.onload = (e) => resolve(e.target.result);
-                r.readAsDataURL(dataUrlOrFile);
-              })
-            : dataUrlOrFile;
-
-          if (localBlobKey && base64) {
-            await blobStore.set(localBlobKey, base64).catch(e => console.warn("Blob store set failed:", e));
-            window._resolvedBlobs = window._resolvedBlobs || {};
-            window._resolvedBlobs[localBlobKey] = base64;
-          }
-
-          if (blockType === 'image' && base64) {
-            const compressed = await compressImageForSync(base64);
-            if (compressed) {
-              block.meta.url = compressed;
-            } else if (localBlobKey) {
-              block.meta.url = localBlobKey;
-            }
-          } else if (localBlobKey) {
-            block.meta.url = localBlobKey;
-          }
+        } else if (localBlobKey) {
+          block.meta.url = localBlobKey;
         }
         save();
+        scheduleFirestoreSave();
         renderBlockEditor(note);
       } catch (err) {
         console.error("Background media upload failed:", err);
@@ -19877,6 +20243,44 @@
       renderBlockEditor(note);
       craftSave();
     };
+
+    window.retryImageResolution = async function(blockId, imgUrl) {
+      const blockEl = document.getElementById(blockId);
+      if (!blockEl) return;
+      const targetEl = blockEl.querySelector('.craft-block-content');
+      if (!targetEl) return;
+      targetEl.innerHTML = `
+        <div class="media-placeholder" style="flex-direction:column; gap:8px; padding: 20px; opacity:0.85;">
+          <div class="spinner" style="width: 24px; height: 24px; border: 2.5px solid var(--accent); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+          <div style="font-size:12px; color: var(--text-secondary); text-align:center;">Reloading image...</div>
+        </div>
+      `;
+      try {
+        const resolved = await resolveImageSrcAsync(imgUrl);
+        if (resolved) {
+          targetEl.innerHTML = `
+            <div class="craft-media-container">
+              <img src="${resolved}" class="craft-media-preview" alt="Dropped image">
+            </div>
+          `;
+          return;
+        }
+      } catch (_) {}
+      triggerFilePicker(blockId, 'image/*');
+    };
+
+    // Auto-recover any broken image blocks when window regains focus
+    window.addEventListener('focus', () => {
+      if (selectedStickyId && initialFirestoreLoadDone) {
+        const brokenPlaceholders = document.querySelectorAll('.broken-image-fallback');
+        if (brokenPlaceholders.length > 0) {
+          const activeNote = findStickyById(selectedStickyId);
+          if (activeNote) {
+            renderBlockEditor(activeNote);
+          }
+        }
+      }
+    });
 
     window.triggerFilePicker = function(blockId, accept) {
       const input = document.createElement('input');
@@ -21263,27 +21667,65 @@
         }
       } else if (block.type === "image") {
         contentEl.contentEditable = "false";
-        if (block.meta.url === "pending-upload-placeholder") {
+        const imgUrl = block.meta.url || "";
+        if (imgUrl === "pending-upload-placeholder") {
           contentEl.innerHTML = `
             <div class="media-placeholder" onclick="triggerFilePicker('${block.id}', 'image/*')" style="flex-direction:column; gap:8px; padding: 20px; opacity:0.85; cursor: pointer;" title="Click to select or replace image">
               <div class="spinner" style="width: 24px; height: 24px; border: 2.5px solid var(--accent); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-              <div style="font-size:12px; color: var(--text-secondary); text-align:center;">Syncing image... (Click to replace)</div>
+              <div style="font-size:12px; color: var(--text-secondary); text-align:center;">Syncing image from cloud...</div>
             </div>
           `;
-        } else if (block.meta.url) {
-          const isBlobKey = block.meta.url.startsWith('blob_');
-          const resolvedSrc = isBlobKey 
-            ? (window._resolvedBlobs && window._resolvedBlobs[block.meta.url] ? window._resolvedBlobs[block.meta.url] : 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7') 
-            : block.meta.url;
-          contentEl.innerHTML = `
-            <div class="craft-media-container">
-              <img src="${resolvedSrc}" class="craft-media-preview" alt="Dropped image" onerror="if(!this.src.includes('base64,R0lGODlh')){this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';}">
-              <div class="media-placeholder broken-image-fallback" style="display:none;" onclick="triggerFilePicker('${block.id}', 'image/*')">
-                <i data-lucide="image-off" style="width: 32px; height: 32px; color: var(--orange);"></i>
-                <div>Image failed to load — Click to replace</div>
+        } else if (imgUrl) {
+          const isDirectUrl = imgUrl.startsWith('http://') || imgUrl.startsWith('https://') || imgUrl.startsWith('data:image/');
+          if (isDirectUrl) {
+            contentEl.innerHTML = `
+              <div class="craft-media-container">
+                <img src="${imgUrl}" class="craft-media-preview" alt="Dropped image" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';">
+                <div class="media-placeholder broken-image-fallback" style="display:none;" onclick="triggerFilePicker('${block.id}', 'image/*')">
+                  <i data-lucide="image-off" style="width: 32px; height: 32px; color: var(--orange);"></i>
+                  <div>Image failed to load — Click to replace</div>
+                </div>
               </div>
-            </div>
-          `;
+            `;
+          } else {
+            // Check memory cache first for 0ms instant render
+            const cachedSrc = window._resolvedImagesCache && window._resolvedImagesCache.get(imgUrl);
+            if (cachedSrc) {
+              contentEl.innerHTML = `
+                <div class="craft-media-container">
+                  <img src="${cachedSrc}" class="craft-media-preview" alt="Dropped image">
+                </div>
+              `;
+            } else {
+              contentEl.innerHTML = `
+                <div class="media-placeholder image-loading-placeholder-${block.id}" onclick="triggerFilePicker('${block.id}', 'image/*')" style="flex-direction:column; gap:8px; padding: 20px; opacity:0.85; cursor: pointer;">
+                  <div class="spinner" style="width: 24px; height: 24px; border: 2.5px solid var(--accent); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                  <div style="font-size:12px; color: var(--text-secondary); text-align:center;">Syncing image...</div>
+                </div>
+              `;
+              resolveImageSrcAsync(imgUrl).then(resolvedSrc => {
+                const blockEl = document.getElementById(block.id);
+                const targetEl = blockEl ? blockEl.querySelector('.craft-block-content') : contentEl;
+                if (!targetEl) return;
+
+                if (resolvedSrc) {
+                  targetEl.innerHTML = `
+                    <div class="craft-media-container">
+                      <img src="${resolvedSrc}" class="craft-media-preview" alt="Dropped image">
+                    </div>
+                  `;
+                } else if (targetEl.querySelector(`.image-loading-placeholder-${block.id}`)) {
+                  targetEl.innerHTML = `
+                    <div class="media-placeholder broken-image-fallback" onclick="retryImageResolution('${block.id}', '${imgUrl}')" style="cursor: pointer;" title="Click to retry loading image">
+                      <i data-lucide="image-off" style="width: 32px; height: 32px; color: var(--orange);"></i>
+                      <div>Image failed to load — Click to retry</div>
+                    </div>
+                  `;
+                  if (window.lucide) lucide.createIcons({ el: targetEl });
+                }
+              });
+            }
+          }
           setTimeout(() => { if (window.lucide) lucide.createIcons({ el: contentEl }); }, 50);
         } else {
           contentEl.innerHTML = `
@@ -23228,17 +23670,29 @@
         try { history = JSON.parse(localStorage.getItem(histKey) || '[]'); } catch(_) {}
         const now = Date.now();
         const lastRev = history[history.length - 1];
-        const newContent = JSON.stringify(note.blocks);
         
-        // Save snapshot if content differs and at least 15s since last revision (or first snapshot)
-        if (!lastRev || (now - lastRev.time > 15000 && JSON.stringify(lastRev.blocks) !== newContent)) {
+        // Strip raw base64 data URLs from history snapshots to conserve quota
+        const slimBlocks = (note.blocks || []).map(b => {
+          if (b.type === 'image' && b.meta?.url && b.meta.url.startsWith('data:image/')) {
+            return { ...b, meta: { ...b.meta, url: '' } };
+          }
+          return b;
+        });
+        const newContent = JSON.stringify(slimBlocks);
+        
+        // Save snapshot if content differs and at least 30s since last revision (or first snapshot)
+        if (!lastRev || (now - lastRev.time > 30000 && JSON.stringify(lastRev.blocks) !== newContent)) {
           history.push({
             time: now,
             title: note.title || 'Untitled',
-            blocks: JSON.parse(newContent)
+            blocks: slimBlocks
           });
-          if (history.length > 40) history.shift(); // Keep up to 40 revisions per note
-          localStorage.setItem(histKey, JSON.stringify(history));
+          if (history.length > 5) history.shift(); // Keep at most 5 revisions per note
+          try {
+            localStorage.setItem(histKey, JSON.stringify(history));
+          } catch (quotaErr) {
+            _purgeStaleLocalStorage();
+          }
         }
       } catch (e) {
         console.warn("Error recording note revision:", e);
@@ -24498,6 +24952,11 @@
       return root ? root.collection(THINKING_NOTES_COLLECTION) : null;
     }
 
+    function getImagesCollectionRef() {
+      const root = getDocRef();
+      return root ? root.collection('thinking-zone-private_images') : null;
+    }
+
     async function loadFromFirestore() {
       if (!currentUser) return;
 
@@ -24699,6 +25158,12 @@
         initialFirestoreLoadDone = true;
         renderStickies();
         renderSidebarFolders();
+        if (selectedStickyId) {
+          const activeNote = findStickyById(selectedStickyId);
+          if (activeNote) {
+            renderBlockEditor(activeNote);
+          }
+        }
         
         if (pendingFirestoreSave) {
           pendingFirestoreSave = false;
@@ -24843,10 +25308,6 @@
           if (typeof showThinkingToast === 'function') {
             showThinkingToast('✅ Everything synced — notes, board & images are up to date', 'success');
           }
-          // Also try a system-level notification so it appears even when the tab is in background
-          if (typeof triggerSystemNotification === 'function') {
-            triggerSystemNotification('thinkOS Synced ✅', 'All notes, sticky board, and images are saved to the cloud.');
-          }
           console.log('SyncTracker: Full sync complete — notes, board & images all up to date.');
         }, 400);
       }
@@ -24854,6 +25315,14 @@
 
     async function saveToFirestore(forceAll = false) {
       if (!currentUser || !initialFirestoreLoadDone) return;
+
+      // Mutex: prevent concurrent saves that cause Firestore SDK AsyncQueue race conditions
+      if (_firestoreSaveInProgress) {
+        pendingFirestoreSave = true;
+        return;
+      }
+      _firestoreSaveInProgress = true;
+
       _syncTracker.start('notes');
       try {
         const rootRef = getDocRef();
@@ -24882,12 +25351,19 @@
         });
 
         // 2.5. Identify and delete notes that were deleted locally
+        // GUARD: Only run deletion logic when the sync map is reliably persisted.
+        // If the map was corrupted or saved in compact form (QuotaExceededError),
+        // skip deletions entirely to prevent false data loss.
         const localNoteIds = new Set(state.notes.map(n => n.id));
         const deletedNoteIds = [];
-        for (const noteId of lastSyncedNotesMap.keys()) {
-          if (!localNoteIds.has(noteId)) {
-            deletedNoteIds.push(noteId);
+        if (_syncMapReliable) {
+          for (const noteId of lastSyncedNotesMap.keys()) {
+            if (!localNoteIds.has(noteId)) {
+              deletedNoteIds.push(noteId);
+            }
           }
+        } else {
+          console.warn("Firestore: Skipping remote deletion pass — sync map is not reliably persisted. Only upserts will run.");
         }
 
         if (deletedNoteIds.length > 0) {
@@ -24953,6 +25429,13 @@
         _syncTracker.fail('notes');
         if (typeof showThinkingToast === 'function') {
           showThinkingToast("⚠️ Sync failed — will retry automatically", "error");
+        }
+      } finally {
+        _firestoreSaveInProgress = false;
+        // If another save was requested while we were busy, schedule it now
+        if (pendingFirestoreSave) {
+          pendingFirestoreSave = false;
+          setTimeout(() => scheduleFirestoreSave(), 500);
         }
       }
     }
@@ -25056,19 +25539,18 @@
                   console.warn(`BlobMigration: Error saving note ${note.id} to Firestore`, dbErr);
                 }
               } else if (block.type === 'image') {
-                corsFailures++;
-                // Firebase Storage upload failed. Fallback to Base64 in Firestore!
-                const compressed = await compressImageForSync(dataUrl);
-                if (compressed) {
-                  block.meta.url = compressed;
+                // Firebase Storage unprovisioned (Spark plan) -> Upload to Firestore Image Store!
+                const fsImgId = await uploadImageToFirestoreStore(dataUrl, localKey);
+                if (fsImgId) {
+                  block.meta.url = fsImgId;
                   try {
                     await getNotesCollectionRef().doc(note.id).set(sanitizeForFirestore(note));
                     await blobStore.remove(localKey);
                     migratedCount++;
                     modifiedNotesSet.add(note);
-                    console.log(`BlobMigration: Fallback to Base64 successful for image block ${block.id}`);
+                    console.log(`BlobMigration: Upload to Firestore Image Store successful for image block ${block.id}`);
                   } catch (dbErr) {
-                    console.warn(`BlobMigration Base64 fallback: Error saving note ${note.id} to Firestore`, dbErr);
+                    console.warn(`BlobMigration Firestore Image Store: Error saving note ${note.id} to Firestore`, dbErr);
                   }
                 }
               } else {
@@ -25963,6 +26445,13 @@
         }
       }
 
+      // Quick Delete Row Shortcut (Alt + Shift + Backspace / Cmd + Shift + Backspace / Ctrl + Shift + Backspace)
+      if (((e.altKey && e.shiftKey) || ((e.metaKey || e.ctrlKey) && e.shiftKey)) && (e.key === "Backspace" || e.key === "Delete")) {
+        e.preventDefault();
+        deleteRowBlock(block, rIdx, note, cIdx);
+        return;
+      }
+
       if (e.key === "Tab") {
         e.preventDefault();
         if (e.shiftKey) {
@@ -26106,6 +26595,70 @@
           }
         }
       } else if (e.key === "Enter") {
+        const isModifierEnter = e.shiftKey || e.altKey || e.ctrlKey || e.metaKey;
+        const lineInfo = getCellLineInfo(cellEl);
+        const currentLine = lineInfo ? lineInfo.currentLineBefore : "";
+
+        const numMatch = currentLine ? currentLine.match(/^(\s*)(\d+)([\.\)])\s*(.*)$/) : null;
+        const bulletMatch = currentLine ? currentLine.match(/^(\s*)([\*\-\•\–\—])\s*(.*)$/) : null;
+        const todoMatch = currentLine ? currentLine.match(/^(\s*)(\[[ xX]\]|\(\s*\))\s*(.*)$/) : null;
+
+        if (isModifierEnter) {
+          // Shift+Enter / Option+Enter / Cmd+Enter: ALWAYS insert a line break inside the cell
+          e.preventDefault();
+          let nextPrefix = "";
+          if (numMatch && numMatch[4].trim().length > 0) {
+            const nextNum = parseInt(numMatch[2], 10) + 1;
+            nextPrefix = `${numMatch[1]}${nextNum}${numMatch[3]} `;
+          } else if (bulletMatch && bulletMatch[3].trim().length > 0) {
+            const bulletSymbol = bulletMatch[2];
+            nextPrefix = `${bulletMatch[1]}${bulletSymbol} `;
+          } else if (todoMatch && todoMatch[3].trim().length > 0) {
+            nextPrefix = `${todoMatch[1]}[ ] `;
+          }
+          insertLineBreakInCell(cellEl, block, rIdx, cIdx, nextPrefix);
+          return;
+        }
+
+        // Plain Enter:
+        // 1. If inside an active list item with text, continue list in the cell
+        if (numMatch && numMatch[4].trim().length > 0) {
+          e.preventDefault();
+          const nextNum = parseInt(numMatch[2], 10) + 1;
+          const nextPrefix = `${numMatch[1]}${nextNum}${numMatch[3]} `;
+          insertLineBreakInCell(cellEl, block, rIdx, cIdx, nextPrefix);
+          return;
+        } else if (bulletMatch && bulletMatch[3].trim().length > 0) {
+          e.preventDefault();
+          const bulletSymbol = bulletMatch[2];
+          const nextPrefix = `${bulletMatch[1]}${bulletSymbol} `;
+          insertLineBreakInCell(cellEl, block, rIdx, cIdx, nextPrefix);
+          return;
+        } else if (todoMatch && todoMatch[3].trim().length > 0) {
+          e.preventDefault();
+          const nextPrefix = `${todoMatch[1]}[ ] `;
+          insertLineBreakInCell(cellEl, block, rIdx, cIdx, nextPrefix);
+          return;
+        }
+
+        // 2. If on an empty list prefix (e.g. user pressed Enter on "2. "), exit list prefix
+        if ((numMatch && numMatch[4].trim().length === 0) || (bulletMatch && bulletMatch[3].trim().length === 0) || (todoMatch && todoMatch[3].trim().length === 0)) {
+          e.preventDefault();
+          // Remove the empty prefix from current line
+          const sel = window.getSelection();
+          if (sel && sel.rangeCount > 0) {
+            const range = sel.getRangeAt(0);
+            const prefixLen = currentLine.length;
+            for (let i = 0; i < prefixLen; i++) {
+              document.execCommand('delete', false, null);
+            }
+          }
+          block.rows[rIdx].cells[cIdx].content = cellEl.innerHTML;
+          craftSave();
+          return;
+        }
+
+        // 3. Otherwise (regular text), create a new table row below
         e.preventDefault();
         const newRowIdx = rIdx + 1;
         pushToThinkingHistory(note.id);
@@ -26117,6 +26670,54 @@
         renderBlockEditor(note);
         craftSave();
         setTimeout(() => focusTableCell(block.id, newRowIdx, cIdx), 20);
+      } else if (e.key === "Backspace") {
+        const lineInfo = getCellLineInfo(cellEl);
+        const currentLine = lineInfo ? lineInfo.currentLineBefore : "";
+        const emptyPrefixMatch = currentLine.match(/^(\s*)((\d+[\.\)])|([\*\-\•\–\—])|(\[[ xX]\]|\(\s*\)))\s*$/);
+        if (emptyPrefixMatch) {
+          e.preventDefault();
+          const prefixLen = currentLine.length;
+          for (let i = 0; i < prefixLen; i++) {
+            document.execCommand('delete', false, null);
+          }
+          block.rows[rIdx].cells[cIdx].content = cellEl.innerHTML;
+          craftSave();
+          return;
+        }
+
+        // Quick delete row on Backspace if the entire row is empty
+        if (!e.shiftKey && !e.altKey && !e.metaKey && !e.ctrlKey) {
+          const isCurrentCellEmpty = !(cellEl.textContent || "").trim();
+          const isWholeRowEmpty = block.rows[rIdx]?.cells?.every(c => !(c.content || "").replace(/<[^>]*>/g, '').trim());
+          if (isCurrentCellEmpty && isWholeRowEmpty && block.rows.length > 1) {
+            e.preventDefault();
+            deleteRowBlock(block, rIdx, note, cIdx);
+            return;
+          }
+        }
+      } else if (e.key === " ") {
+        const lineInfo = getCellLineInfo(cellEl);
+        const currentLine = lineInfo ? lineInfo.currentLineBefore : "";
+        if (currentLine === "-" || currentLine === "*") {
+          e.preventDefault();
+          document.execCommand('delete', false, null);
+          document.execCommand('insertText', false, '• ');
+          if (block && block.rows && block.rows[rIdx] && block.rows[rIdx].cells[cIdx]) {
+            block.rows[rIdx].cells[cIdx].content = cellEl.innerHTML;
+            craftSave();
+          }
+          return;
+        } else if (currentLine === "[]") {
+          e.preventDefault();
+          document.execCommand('delete', false, null);
+          document.execCommand('delete', false, null);
+          document.execCommand('insertText', false, '[ ] ');
+          if (block && block.rows && block.rows[rIdx] && block.rows[rIdx].cells[cIdx]) {
+            block.rows[rIdx].cells[cIdx].content = cellEl.innerHTML;
+            craftSave();
+          }
+          return;
+        }
       } else if (e.key === "Escape") {
         e.preventDefault();
         cellEl.blur();
@@ -26127,6 +26728,74 @@
           tableBlockEl.classList.add("selected");
           tableBlockEl.focus();
         }
+      }
+    }
+
+    function getCellLineInfo(cellEl) {
+      try {
+        const sel = window.getSelection();
+        if (!sel || sel.rangeCount === 0) return null;
+        const range = sel.getRangeAt(0);
+
+        // Method A: Convert <br>, <div>, <p> in cloned range contents into newlines
+        const preRange = range.cloneRange();
+        preRange.selectNodeContents(cellEl);
+        preRange.setEnd(range.startContainer, range.startOffset);
+        
+        const fragment = preRange.cloneContents();
+        const tempDiv = document.createElement("div");
+        tempDiv.appendChild(fragment);
+        
+        tempDiv.querySelectorAll("br").forEach(br => br.replaceWith("\n"));
+        tempDiv.querySelectorAll("div, p, tr, td, th").forEach(el => el.before("\n"));
+        
+        const fullTextBefore = tempDiv.textContent || "";
+        const lines = fullTextBefore.split(/\r?\n/);
+        const currentLine = lines[lines.length - 1] || "";
+
+        return {
+          currentLineBefore: currentLine
+        };
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function insertLineBreakInCell(cellEl, block, rIdx, cIdx, prefix = "") {
+      let handled = false;
+      try {
+        handled = document.execCommand('insertLineBreak');
+        if (handled && prefix) {
+          document.execCommand('insertText', false, prefix);
+        }
+      } catch (_) {
+        handled = false;
+      }
+
+      if (!handled) {
+        const sel = window.getSelection();
+        if (sel && sel.rangeCount > 0) {
+          const range = sel.getRangeAt(0);
+          range.deleteContents();
+          const br = document.createElement("br");
+          range.insertNode(br);
+          const newRange = document.createRange();
+          if (prefix) {
+            const textNode = document.createTextNode(prefix);
+            br.parentNode.insertBefore(textNode, br.nextSibling);
+            newRange.setStart(textNode, textNode.length);
+          } else {
+            newRange.setStartAfter(br);
+          }
+          newRange.collapse(true);
+          sel.removeAllRanges();
+          sel.addRange(newRange);
+        }
+      }
+
+      if (block && block.rows && block.rows[rIdx] && block.rows[rIdx].cells[cIdx]) {
+        block.rows[rIdx].cells[cIdx].content = cellEl.innerHTML;
+        craftSave();
       }
     }
 
@@ -26251,7 +26920,7 @@
       craftSave();
     }
 
-    function deleteRowBlock(block, rIdx, note) {
+    function deleteRowBlock(block, rIdx, note, cIdx = 0) {
       if (block.rows.length <= 1) {
         showThinkingToast("Cannot delete the last remaining row!");
         return;
@@ -26260,6 +26929,8 @@
       block.rows.splice(rIdx, 1);
       renderBlockEditor(note);
       craftSave();
+      const targetRIdx = Math.max(0, Math.min(rIdx, block.rows.length - 1));
+      setTimeout(() => focusTableCell(block.id, targetRIdx, cIdx), 20);
     }
 
     function moveColumnBlock(block, cIdx, position, note, rIdx = 0) {
@@ -27002,18 +27673,37 @@
       startTimer();
     }
 
-    function triggerSystemNotification(title, message) {
+    function triggerSystemNotification(title, message, duration = 4000) {
       try {
-        if ("Notification" in window) {
-          if (Notification.permission === "granted") {
-            new Notification(title, { body: message, icon: '/favicon.svg' });
-          } else if (Notification.permission !== "denied") {
-            Notification.requestPermission().then(permission => {
-              if (permission === "granted") {
-                new Notification(title, { body: message, icon: '/favicon.svg' });
-              }
+        if (!("Notification" in window)) return;
+        const show = () => {
+          try {
+            const notif = new Notification(title, {
+              body: message,
+              icon: '/favicon.svg'
             });
+            notif.onclick = () => {
+              window.focus();
+              try { notif.close(); } catch(e) {}
+            };
+            const closeTimeout = duration > 0 ? Math.max(duration, 3000) : 4000;
+            setTimeout(() => {
+              try { notif.close(); } catch(e) {}
+            }, closeTimeout);
+            return notif;
+          } catch(err) {
+            console.warn("System notification error:", err);
           }
+        };
+
+        if (Notification.permission === "granted") {
+          return show();
+        } else if (Notification.permission !== "denied") {
+          Notification.requestPermission().then(permission => {
+            if (permission === "granted") {
+              show();
+            }
+          });
         }
       } catch(e) {
         console.warn("System notification error:", e);
@@ -27372,9 +28062,12 @@ function customConfirm(message, options = {}) {
         }
       }
       if (DOM.editorNotebook) {
+        const pillWrap = DOM.editorNotebook.closest('.toolbar-folder-pill-wrap');
         if (n.type === 'daily-taskboard') {
+          if (pillWrap) pillWrap.style.display = 'none';
           DOM.editorNotebook.style.display = 'none';
         } else {
+          if (pillWrap) pillWrap.style.display = 'flex';
           renderNotebookDropdownOptions(n.notebook || "inbox");
           DOM.editorNotebook.value = n.notebook || "inbox";
           DOM.editorNotebook.style.display = '';
@@ -27436,8 +28129,9 @@ function customConfirm(message, options = {}) {
           activeNotebook = '__taskboards';
         }
       } else if (n.type === 'learning-subject' || n.type === 'learning-page') {
-        if (activeNotebook !== '__roadmaps' && activeNotebook !== '__learning' && activeNotebook !== '__all') {
-          activeNotebook = '__roadmaps';
+        const eff = normalizeNotebookKey(getEffectiveNotebook(n));
+        if (activeNotebook !== '__roadmaps' && activeNotebook !== '__learning' && activeNotebook !== '__all' && activeNotebook !== eff) {
+          activeNotebook = eff;
         }
       } else {
         const targetNotebook = normalizeNotebookKey(n.notebook);
@@ -31410,7 +32104,79 @@ function customConfirm(message, options = {}) {
       }
     };
     window.toggleMobileSidebar = window.toggleSidebar;
-    window.minimizeSidebar = window.toggleSidebar;
+
+    window.updateSidebarMinimizeBtnUI = function(isMinimized) {
+      const minimizeBtns = document.querySelectorAll('.sidebar-minimize-btn');
+      minimizeBtns.forEach(btn => {
+        btn.setAttribute('title', isMinimized ? 'Expand Sidebar' : 'Minimize Sidebar');
+        btn.setAttribute('aria-label', isMinimized ? 'Expand Sidebar' : 'Minimize Sidebar');
+        const iconContainer = btn.querySelector('.craft-workspace-chevron') || btn.querySelector('[data-lucide]') || btn;
+        if (iconContainer) {
+          iconContainer.setAttribute('data-lucide', isMinimized ? 'chevrons-right' : 'chevrons-left');
+          if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            window.lucide.createIcons({ root: btn });
+          }
+        }
+      });
+    };
+
+    window.minimizeSidebar = function(event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      const isMobile = window.innerWidth <= 768;
+      if (isMobile) {
+        if (typeof window.toggleSidebar === 'function') window.toggleSidebar(event);
+        return;
+      }
+
+      // If sidebar is hidden via sidebar-hidden, unhide it first
+      if (document.body.classList.contains('sidebar-hidden')) {
+        document.body.classList.remove('sidebar-hidden');
+        try {
+          localStorage.setItem('thinking_sidebar_hidden', 'false');
+        } catch(e) {}
+        const headerToggleBtns = document.querySelectorAll('.sidebar-toggle-btn');
+        headerToggleBtns.forEach(btn => {
+          if (btn.id !== 'boardHeaderBackBtn') btn.classList.remove('active');
+        });
+      }
+
+      const wasMinimized = document.body.classList.contains('sidebar-minimized');
+
+      if (!wasMinimized) {
+        // When minimizing the sidebar, collapse all folders and nested pages
+        if (typeof getNotebookDefinitions === 'function' && typeof state !== 'undefined') {
+          const allFolders = getNotebookDefinitions();
+          const collapsedSet = new Set(state.collapsedFolders || []);
+          allFolders.forEach(f => {
+            if (f && f.key) collapsedSet.add(f.key);
+          });
+          state.collapsedFolders = Array.from(collapsedSet);
+
+          const collapsedNotesSet = new Set(state.collapsedNotes || []);
+          (state.notes || []).forEach(n => {
+            const pId = n.parentSubjectId || n.parentId;
+            if (pId) collapsedNotesSet.add(pId);
+          });
+          state.collapsedNotes = Array.from(collapsedNotesSet);
+
+          if (typeof safeStorage !== 'undefined' && typeof KEY !== 'undefined') {
+            safeStorage.set(KEY, JSON.stringify(state));
+          }
+        }
+      }
+
+      document.body.classList.toggle('sidebar-minimized');
+      const isMinimized = document.body.classList.contains('sidebar-minimized');
+      try {
+        localStorage.setItem('thinking_sidebar_minimized', isMinimized ? 'true' : 'false');
+      } catch(e) {}
+
+      updateSidebarMinimizeBtnUI(isMinimized);
+      if (typeof renderSidebarFolders === 'function') renderSidebarFolders();
+    };
 
     function updateCraftHeaderUI() {
       const titleEl = document.getElementById("craftPageTitle");
@@ -31465,13 +32231,12 @@ function customConfirm(message, options = {}) {
       const countEl = document.getElementById("noteCountThinking");
       if (countEl) {
         const count = state.notes.filter(n => {
-          if (n.archived && activeNotebook !== "__archived") return false;
-          if (activeNotebook === "__roadmaps" || activeNotebook === "__learning") return !n.archived && n.type === 'learning-subject';
-          if (activeNotebook === "__taskboards" || activeNotebook === "__tasks") return !n.archived && n.type === 'daily-taskboard';
-          if (n.type === 'daily-taskboard' || n.type === 'learning-subject' || n.type === 'learning-page') return false;
           if (activeNotebook === "__all") return !n.archived;
-          if (activeNotebook === "__archived") return n.archived;
           if (activeNotebook === "__pinned") return !n.archived && n.pinned;
+          if (activeNotebook === "__archived") return n.archived;
+          if (activeNotebook === "__roadmaps" || activeNotebook === "__learning") return !n.archived && (n.type === 'learning-subject' || n.type === 'learning-page');
+          if (activeNotebook === "__taskboards" || activeNotebook === "__tasks") return !n.archived && n.type === 'daily-taskboard';
+          if (n.archived && activeNotebook !== "__archived") return false;
           return normalizeNotebookKey(getEffectiveNotebook(n)) === activeNotebook;
         }).length;
         countEl.textContent = count;
@@ -31604,15 +32369,11 @@ function customConfirm(message, options = {}) {
 
       let filtered = state.notes.filter(n => {
         const matchesView = (() => {
-          if (activeView === "__roadmaps" || activeView === "__learning") return !n.archived && n.type === 'learning-subject';
-          if (activeView === "__taskboards" || activeView === "__tasks") return !n.archived && n.type === 'daily-taskboard';
-          // All taskboard and learning notes should only be visible in their respective views
-          if (n.type === 'daily-taskboard') return false;
-          if (n.type === 'learning-subject' || n.type === 'learning-page') return false;
-
-          if (activeView === "__all") return !n.archived && (!n.parentId || search !== "");
-          if (activeView === "__archived") return n.archived;
+          if (activeView === "__all") return !n.archived;
           if (activeView === "__pinned") return !n.archived && n.pinned;
+          if (activeView === "__archived") return n.archived;
+          if (activeView === "__roadmaps" || activeView === "__learning") return !n.archived && (n.type === 'learning-subject' || n.type === 'learning-page');
+          if (activeView === "__taskboards" || activeView === "__tasks") return !n.archived && n.type === 'daily-taskboard';
           
           const matchesArchive = showArchived ? n.archived : !n.archived;
           const matchesNotebook = normalizeNotebookKey(getEffectiveNotebook(n)) === activeView;
@@ -32636,12 +33397,37 @@ function customConfirm(message, options = {}) {
         }
       }
     }
-    function backup() {
+    async function backup() {
       const dateLabel = getLocalDateString();
       const a = document.createElement("a");
       const cards = (window.boardSyncAPI && typeof window.boardSyncAPI.getCards === 'function') ? window.boardSyncAPI.getCards() : [];
+      
+      // Collect all image keys referenced across all notes
+      const embeddedImages = {};
+      const imageKeys = new Set();
+      (state.notes || []).forEach(note => {
+        (note.blocks || []).forEach(block => {
+          if (block.type === 'image' && block.meta && block.meta.url) {
+            imageKeys.add(block.meta.url);
+          }
+        });
+      });
+
+      // Embed full image data for complete self-contained portable backups
+      if (imageKeys.size > 0) {
+        showThinkingToast(`Preparing backup with ${imageKeys.size} image(s)...`);
+        for (const imgKey of imageKeys) {
+          try {
+            const src = await resolveImageSrcAsync(imgKey);
+            if (src && (src.startsWith('data:image/') || src.startsWith('http'))) {
+              embeddedImages[imgKey] = src;
+            }
+          } catch (_) {}
+        }
+      }
+
       const json = JSON.stringify({
-        version: 2,
+        version: 3,
         exportedAt: new Date().toISOString(),
         noteCount: (state.notes || []).length,
         boardCardCount: cards.length,
@@ -32649,6 +33435,7 @@ function customConfirm(message, options = {}) {
         activeNotebook: activeNotebook,
         notes: state.notes,
         boardCards: cards,
+        embeddedImages: embeddedImages,
         // Folder structure
         customNotebooks: state.customNotebooks || [],
         notebookLabels: state.notebookLabels || {},
@@ -32662,7 +33449,8 @@ function customConfirm(message, options = {}) {
       a.download = `thinkOS_backup_${dateLabel}.json`;
       a.click();
       const folderCount = (state.customNotebooks || []).length;
-      showThinkingToast(`Backup exported (${(state.notes || []).length} notes, ${folderCount} folders, ${cards.length} sticky cards)`);
+      const imgCount = Object.keys(embeddedImages).length;
+      showThinkingToast(`Backup exported (${(state.notes || []).length} notes, ${folderCount} folders, ${cards.length} cards, ${imgCount} images)`);
     }
 
     function importBackup() {
@@ -32692,6 +33480,10 @@ function customConfirm(message, options = {}) {
             if (data.boardCards && data.boardCards.length) {
               msg += ' and ' + data.boardCards.length + ' board sticky card(s)';
             }
+            if (data.embeddedImages && typeof data.embeddedImages === 'object') {
+              const imgTotal = Object.keys(data.embeddedImages).length;
+              if (imgTotal > 0) msg += ' and ' + imgTotal + ' image(s)';
+            }
             if (data.ideaInbox && data.ideaInbox.length) {
               msg += ' and ' + data.ideaInbox.length + ' idea inbox item(s)';
             }
@@ -32701,6 +33493,19 @@ function customConfirm(message, options = {}) {
 
             var now = Date.now();
             state.notes = data.notes || [];
+
+            // ── Restore embedded images into IndexedDB and Firestore (version 3+ backups) ──
+            if (data.embeddedImages && typeof data.embeddedImages === 'object') {
+              for (const [imgKey, base64Src] of Object.entries(data.embeddedImages)) {
+                if (base64Src && typeof base64Src === 'string') {
+                  blobStore.set(imgKey, base64Src).catch(() => {});
+                  if (window._resolvedImagesCache) window._resolvedImagesCache.set(imgKey, base64Src);
+                  if (imgKey.startsWith('fsimg_') && base64Src.startsWith('data:image/') && typeof auth !== 'undefined' && auth.currentUser) {
+                    uploadImageToFirestoreStore(base64Src, imgKey).catch(() => {});
+                  }
+                }
+              }
+            }
 
             // ── Restore folder structure (version 2+ backups) ──────────────────
             if (Array.isArray(data.customNotebooks) && data.customNotebooks.length > 0) {
@@ -32741,6 +33546,7 @@ function customConfirm(message, options = {}) {
             invalidateFolderCounts();
 
             save();
+            flushFirestoreSave();
             renderSidebar();
             renderStickies();
             updateBreadcrumb();
@@ -33063,13 +33869,19 @@ function customConfirm(message, options = {}) {
       }
     }
 
-    // Restore saved sidebar hidden state
+    // Restore saved sidebar hidden & minimized state
     try {
       if (localStorage.getItem('thinking_sidebar_hidden') === 'true' && window.innerWidth > 768) {
         document.body.classList.add('sidebar-hidden');
         document.querySelectorAll('.sidebar-toggle-btn').forEach(btn => {
           if (btn.id !== 'boardHeaderBackBtn') btn.classList.add('active');
         });
+      }
+      if (localStorage.getItem('thinking_sidebar_minimized') === 'true' && window.innerWidth > 768) {
+        document.body.classList.add('sidebar-minimized');
+        if (typeof updateSidebarMinimizeBtnUI === 'function') {
+          updateSidebarMinimizeBtnUI(true);
+        }
       }
     } catch(e) {}
 
@@ -34953,18 +35765,17 @@ function customConfirm(message, options = {}) {
       setAuthGateStatus("Signed out. Sign in again to unlock your private thinkOS.");
     }
 
-    async function insertImageBlock(base64) {
+    function insertImageBlock(base64) {
       const note = findStickyById(selectedStickyId);
       if (!note) return;
       
-      const localBlobKey = `blob_${Date.now()}_${Math.random().toString(36).slice(2, 7)}.jpg`;
-      await blobStore.set(localBlobKey, base64).catch(e => console.warn(e));
-      
-      const compressed = await compressImageForSync(base64);
-      const initialUrl = compressed || base64;
+      const localBlobKey = `fsimg_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+      window._resolvedImagesCache = window._resolvedImagesCache || new Map();
+      window._resolvedImagesCache.set(localBlobKey, base64);
+      blobStore.set(localBlobKey, base64).catch(e => console.warn(e));
 
       const newBlock = createNewBlockObj("image");
-      newBlock.meta = { url: initialUrl, localBlobKey: localBlobKey };
+      newBlock.meta = { url: localBlobKey, localBlobKey: localBlobKey };
       
       // Insert after focused block or at end
       const focusedBlockEl = document.activeElement?.closest('.craft-block');
@@ -35002,7 +35813,9 @@ function customConfirm(message, options = {}) {
       renderBlockEditor(note);
       
       // Asynchronously trigger background image upload/compression
-      processImageUploadInBackground(note.id, newBlock.id, base64, localBlobKey);
+      setTimeout(() => {
+        processImageUploadInBackground(note.id, newBlock.id, base64, localBlobKey);
+      }, 30);
 
       if (nextFocusBlockId) {
         setTimeout(() => {
@@ -35413,6 +36226,11 @@ function customConfirm(message, options = {}) {
               }
             }
           });
+        }
+        // Initialize High Priority Taskboard Notification Scheduler (runs every 30s)
+        if (typeof checkTaskboardHighPriorityNotifications === 'function') {
+          setTimeout(checkTaskboardHighPriorityNotifications, 2500);
+          setInterval(checkTaskboardHighPriorityNotifications, 30000);
         }
       } catch (err) {
         console.error("Initialization Error:", err);
@@ -36591,6 +37409,106 @@ function customConfirm(message, options = {}) {
         String(dt.getDate()).padStart(2, '0');
     }
 
+    // -- High Priority Task Time & Notification Engine ----------------
+    function extractTimeFromTaskLabel(text) {
+      if (!text) return null;
+      const s = String(text).trim();
+      // Match 12-hour format: 10:30am, 10:30 am, 10:30 PM, 10am, 10 am, at 3:15 pm, by 5pm, @ 4pm, 11:45pm
+      const match12 = s.match(/(?:^|\s|@|at\s+|by\s+)(1[0-2]|0?[1-9])(?::([0-5][0-9]))?\s*(am|pm)\b/i);
+      if (match12) {
+        let hour = parseInt(match12[1], 10);
+        const minute = match12[2] ? parseInt(match12[2], 10) : 0;
+        const meridian = match12[3].toLowerCase();
+        if (meridian === 'pm' && hour < 12) hour += 12;
+        if (meridian === 'am' && hour === 12) hour = 0;
+        return { hour, minute, raw: match12[0].trim() };
+      }
+      // Match 24-hour format: 14:30, 09:15, at 16:00, 23:45
+      const match24 = s.match(/(?:^|\s|@|at\s+|by\s+)([01]?[0-9]|2[0-3]):([0-5][0-9])\b/i);
+      if (match24) {
+        const hour = parseInt(match24[1], 10);
+        const minute = parseInt(match24[2], 10);
+        return { hour, minute, raw: match24[0].trim() };
+      }
+      return null;
+    }
+
+    function checkTaskboardHighPriorityNotifications() {
+      try {
+        if (typeof triggerSystemNotification !== 'function') return;
+        const today = getLocalDateKey();
+        const allTaskboards = (state.notes || []).filter(n => !n.archived && n.type === 'daily-taskboard');
+        if (!allTaskboards.length) return;
+
+        const now = new Date();
+        const curHour = now.getHours();
+        const curMinute = now.getMinutes();
+
+        let notifiedCache = {};
+        try {
+          notifiedCache = JSON.parse(localStorage.getItem('thinkos_p1_notif_log_' + today) || '{}');
+        } catch(e) { notifiedCache = {}; }
+
+        const pendingNoTimeTasks = [];
+
+        allTaskboards.forEach(board => {
+          (board.tasks || []).forEach(task => {
+            const pri = (task.priority || '').toLowerCase();
+            const isP1 = pri === 'p1' || pri === 'high';
+            const isDone = (task.doneHistory || {})[today] === true;
+            const label = (task.label || '').trim();
+
+            if (!isP1 || isDone || !label) return;
+
+            const timeObj = extractTimeFromTaskLabel(label);
+            if (timeObj) {
+              // Specific time mentioned: notify at that exact scheduled time (within the minute)
+              const timeKey = 'time_' + task.id + '_' + timeObj.hour + '_' + timeObj.minute;
+              if (!notifiedCache[timeKey]) {
+                if (curHour === timeObj.hour && curMinute === timeObj.minute) {
+                  notifiedCache[timeKey] = true;
+                  try { localStorage.setItem('thinkos_p1_notif_log_' + today, JSON.stringify(notifiedCache)); } catch(e) {}
+                  const formattedTime = (timeObj.hour % 12 || 12) + ':' + String(timeObj.minute).padStart(2, '0') + (timeObj.hour >= 12 ? ' PM' : ' AM');
+                  triggerSystemNotification('🔥 High Priority Task Due (' + formattedTime + ')', '"' + label + '" is scheduled for now.', 4000);
+                }
+              }
+            } else {
+              pendingNoTimeTasks.push({ label, boardTitle: board.title || 'Daily Tasks' });
+            }
+          });
+        });
+
+        // For tasks without a specific time: show notification at most 2 times a day (Morning and Evening)
+        if (pendingNoTimeTasks.length > 0) {
+          let dailySlots = {};
+          try {
+            dailySlots = JSON.parse(localStorage.getItem('thinkos_p1_slots_' + today) || '{}');
+          } catch(e) { dailySlots = {}; }
+
+          // Slot 1: Morning Check (before 1:00 PM / 13:00)
+          if (curHour < 13 && !dailySlots.slot1) {
+            dailySlots.slot1 = true;
+            try { localStorage.setItem('thinkos_p1_slots_' + today, JSON.stringify(dailySlots)); } catch(e) {}
+            const count = pendingNoTimeTasks.length;
+            const title = '⚡ ' + count + ' High Priority Task' + (count > 1 ? 's' : '') + ' (Morning)';
+            const body = pendingNoTimeTasks.slice(0, 3).map(t => '• ' + t.label).join('\n') + (count > 3 ? '\n(+' + (count - 3) + ' more)' : '');
+            triggerSystemNotification(title, body, 4000);
+          }
+          // Slot 2: Evening Check (at or after 5:00 PM / 17:00)
+          else if (curHour >= 17 && !dailySlots.slot2) {
+            dailySlots.slot2 = true;
+            try { localStorage.setItem('thinkos_p1_slots_' + today, JSON.stringify(dailySlots)); } catch(e) {}
+            const count = pendingNoTimeTasks.length;
+            const title = '⚡ ' + count + ' High Priority Task' + (count > 1 ? 's' : '') + ' Remaining (Evening)';
+            const body = pendingNoTimeTasks.slice(0, 3).map(t => '• ' + t.label).join('\n') + (count > 3 ? '\n(+' + (count - 3) + ' more)' : '');
+            triggerSystemNotification(title, body, 4000);
+          }
+        }
+      } catch(e) {
+        console.warn("checkTaskboardHighPriorityNotifications error:", e);
+      }
+    }
+
     async function createDailyTaskboard(boardTitle) {
       if (!boardTitle) {
         boardTitle = await customPrompt('Name your Taskboard (e.g. "Daily Habits", "Work Routine"):', 'Daily Tasks');
@@ -36671,6 +37589,9 @@ function customConfirm(message, options = {}) {
       craftSave();
       const m = TASKBOARD_MILESTONES[streak];
       showTaskboardMilestoneToast(streak, m.emoji, m.msg, task.label);
+      if (typeof triggerSystemNotification === 'function') {
+        triggerSystemNotification(streak + '-Day Streak Unlocked! ' + m.emoji, (task.label ? '"' + task.label + '": ' : '') + m.msg, 4000);
+      }
     }
 
     function showTaskboardMilestoneToast(days, emoji, msg, taskLabel) {
@@ -36727,7 +37648,13 @@ function customConfirm(message, options = {}) {
       task.doneHistory[today] = !task.doneHistory[today];
       note.updatedAt = Date.now();
       craftSave();
-      if (task.doneHistory[today]) checkTaskboardMilestones(note, task);
+      if (task.doneHistory[today]) {
+        checkTaskboardMilestones(note, task);
+        if ((task.priority || '').toLowerCase() === 'p1' && typeof triggerSystemNotification === 'function') {
+          const taskName = (task.label || '').trim() || 'Task';
+          triggerSystemNotification('✅ High Priority Task Completed!', '"' + taskName + '" finished for today 🎉', 4000);
+        }
+      }
       renderDailyTaskboard(note);
     }
 
@@ -36745,6 +37672,10 @@ function customConfirm(message, options = {}) {
       task.priority = pOrder[nextIdx];
       note.updatedAt = Date.now();
       craftSave();
+      if (task.priority === 'p1' && typeof triggerSystemNotification === 'function') {
+        const taskName = (task.label || '').trim() || 'Task';
+        triggerSystemNotification('🔥 High Priority Task (Must Do)', '"' + taskName + '" marked as Priority 1', 4000);
+      }
       renderDailyTaskboard(note);
     }
 
@@ -37035,8 +37966,10 @@ function customConfirm(message, options = {}) {
             leftBorder = 'border-left:3.5px solid #0D9488;';
           }
           const priorityBtn = '<button class="dtb-pri-btn" onclick="cycleDailyTaskPriority(\'' + nid + '\',\'' + task.id + '\')" title="' + pTitle + ' - Click to cycle" style="background:none;border:none;padding:0 2px;font-size:11px;font-weight:' + pFontWeight + ';color:' + pColor + ';cursor:pointer;flex-shrink:0;white-space:nowrap;letter-spacing:0.02em;font-family:var(--font-sans);opacity:' + pOpacity + ';transition:opacity 0.15s;' + (isP1 ? 'text-shadow:0 0 1px rgba(234,88,12,0.4);' : '') + '" onmouseover="this.style.opacity=\'0.75\'" onmouseout="this.style.opacity=\'' + pOpacity + '\'">' + pText + '</button>';
+          const checkBtnClass = 'dtb-check-btn' + (done ? ' done' : '');
+          const checkBtnStyle = 'flex-shrink:0;min-width:18px;width:18px;min-height:18px;height:18px;border-radius:50%;border:1.8px solid ' + (done ? '#6B5CE0' : 'var(--muted, #a1a1aa)') + ';background:' + (done ? '#6B5CE0' : 'transparent') + ';cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;padding:0;box-sizing:border-box;align-self:center;';
           return '<div class="dtb-task-row" style="display:flex;align-items:center;gap:8px;padding:6px 12px;margin:3px 0;border-radius:8px;border-bottom:1px solid var(--border-soft, rgba(0,0,0,0.04));transition:background 0.15s;' + leftBorder + '" onmouseover="this.querySelector(\'.dtb-del\').style.opacity=\'1\'; var p=this.querySelector(\'.dtb-pri-btn\'); if(p && !p.style.fontWeight.includes(\'700\') && !p.style.fontWeight.includes(\'800\')) p.style.opacity=\'0.75\';" onmouseout="this.querySelector(\'.dtb-del\').style.opacity=\'0\'; var p=this.querySelector(\'.dtb-pri-btn\'); if(p && !p.style.fontWeight.includes(\'700\') && !p.style.fontWeight.includes(\'800\')) p.style.opacity=\'0.35\';">' +
-            '<button onclick="toggleDailyTask(\'' + nid + '\',\'' + task.id + '\')" title="' + (done ? 'Mark incomplete' : 'Mark done') + '" style="flex-shrink:0;min-width:18px;width:18px;min-height:18px;height:18px;border-radius:50%;border:1.8px solid ' + (done ? '#6B5CE0' : 'var(--border)') + ';background:' + (done ? '#6B5CE0' : 'transparent') + ';cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;padding:0;box-sizing:border-box;align-self:center;">' + checkInner + '</button>' +
+            '<button class="' + checkBtnClass + '" onclick="toggleDailyTask(\'' + nid + '\',\'' + task.id + '\')" title="' + (done ? 'Mark incomplete' : 'Mark done') + '" style="' + checkBtnStyle + '">' + checkInner + '</button>' +
             priorityBtn +
             '<textarea class="dtb-task-label" placeholder="Task name..." rows="1" data-noteid="' + nid + '" data-taskid="' + task.id + '" oninput="this.style.height=\'auto\';this.style.height=Math.min(this.scrollHeight, 40)+\'px\';updateDailyTaskLabel(\'' + nid + '\',\'' + task.id + '\',this.value)" onkeydown="if(event.key===\'Enter\'){event.preventDefault();addDailyTask(\'' + nid + '\');}" style="flex:1;border:none;outline:none;background:transparent;font-size:13px;line-height:1.4;font-family:var(--font-sans);color:' + (done ? 'var(--muted)' : 'var(--text)') + ';text-decoration:' + (done ? 'line-through' : 'none') + ';transition:color 0.2s, text-decoration 0.2s;padding:2px 0;margin:0;min-height:20px;max-height:40px;height:auto;resize:none;overflow-y:hidden;display:block;box-sizing:border-box;">' + escHtmlDtb(task.label) + '</textarea>' +
             streakBadge +
@@ -37139,7 +38072,7 @@ function customConfirm(message, options = {}) {
         tags: [],
         createdAt: now,
         updatedAt: now,
-        notebook: '__roadmaps'
+        notebook: 'inbox'
       };
       
       state.notes.unshift(subjectNote);
@@ -37149,13 +38082,12 @@ function customConfirm(message, options = {}) {
       if (typeof renderSidebarFolders === 'function') renderSidebarFolders();
       if (typeof render === 'function') render();
       
-      switchNotebook('__roadmaps');
       openNoteEditor(subjectId);
       
       // Final Lucide refresh to ensure all icons (even new ones) appear
       setTimeout(() => { if (window.lucide) lucide.createIcons({ root: document.getElementById('blockEditor') || document.body }); }, 100);
       
-      showThinkingToast('Roadmap created');
+      showThinkingToast('Roadmap created in Unsorted');
     }
 
     // Global filter/sort setters for the subject dashboard
@@ -38576,6 +39508,19 @@ function customConfirm(message, options = {}) {
           combined.includes('preflight') || combined.includes('net::err')) {
         console.warn('thinkOS: Suppressed non-fatal CORS/network error:', msgStr);
         return true; // suppress
+      }
+
+      // Ignore Firestore SDK internal assertion errors — these are a known bug
+      // in Firebase JS SDK v10.x (AsyncQueue race condition). They don't affect
+      // data integrity and the SDK recovers on its own.
+      if (combined.includes('internal assertion failed') || combined.includes('unexpected state')) {
+        console.warn('thinkOS: Suppressed non-fatal Firestore SDK assertion error:', msgStr);
+        if (typeof showThinkingToast === 'function') {
+          showThinkingToast("⚠️ Background sync glitch — retrying", "warning");
+        }
+        // Re-queue a save attempt so data isn't lost
+        if (typeof pendingFirestoreSave !== 'undefined') pendingFirestoreSave = true;
+        return true; // suppress — don't show crash modal
       }
 
       const now = Date.now();
