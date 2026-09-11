@@ -91,6 +91,12 @@
       --shadow: rgba(107, 92, 224, 0.10);
       --accent-shadow: rgba(107, 92, 224, 0.06);
 
+      --cal-empty: #E8E4FA;
+      --cal-lvl1: #C4BDF5;
+      --cal-lvl2: #9A8FE8;
+      --cal-lvl3: #6B5CE0;
+      --cal-future: #F2F0EA;
+
       /* Layout & Spacing */
       --gap-xs: 4px;
       --gap-sm: 8px;
@@ -259,6 +265,12 @@
       --active-block-bg: rgba(245, 158, 11, 0.12);
       --card-title-color: var(--text);
       --sidebar-text: #94a3b8;
+
+      --cal-empty: rgba(130, 117, 250, 0.22);
+      --cal-lvl1: rgba(130, 117, 250, 0.42);
+      --cal-lvl2: rgba(130, 117, 250, 0.68);
+      --cal-lvl3: #8275FA;
+      --cal-future: rgba(255, 255, 255, 0.08);
     }
 
     #thinkingPage.hidden {
@@ -6245,6 +6257,10 @@
       color: #7FB38A !important; /* Folder Green */
       opacity: 0.95;
     }
+    #craft-nav-habits .craft-nav-icon {
+      color: #DD8D7E !important; /* Folder Coral / Flame */
+      opacity: 0.95;
+    }
     #craft-nav-calendar .craft-nav-icon {
       color: #9B72CF !important; /* Purple */
       opacity: 0.95;
@@ -6292,6 +6308,7 @@
     #craft-nav-board:hover .craft-nav-icon,
     #craft-nav-roadmaps:hover .craft-nav-icon,
     #craft-nav-taskboards:hover .craft-nav-icon,
+    #craft-nav-habits:hover .craft-nav-icon,
     #craft-nav-calendar:hover .craft-nav-icon,
     #craft-nav-all:hover .craft-nav-icon,
     #craft-nav-continue-learning:hover .craft-nav-icon,
@@ -8649,20 +8666,24 @@
     }
 
     .craft-ai-header-btn {
-      background: rgba(107, 92, 224, 0.1) !important;
-      color: var(--accent) !important;
-      border: 1px solid rgba(107, 92, 224, 0.22) !important;
-      padding: 0 12px !important;
-      gap: 6px !important;
-      font-weight: 600 !important;
+      background: var(--panel) !important;
+      color: var(--text) !important;
+      border: 1px solid rgba(0, 0, 0, 0.08) !important;
+      padding: 0 10px !important;
+      gap: 4px !important;
+      font-weight: 500 !important;
       border-radius: 9999px !important;
       height: 28px !important;
       min-height: 28px !important;
       font-size: var(--text-xs) !important;
     }
+    body.theme-dark .craft-ai-header-btn {
+      border-color: rgba(255, 255, 255, 0.1) !important;
+    }
     .craft-ai-header-btn:hover {
-      background: rgba(107, 92, 224, 0.18) !important;
-      border-color: rgba(107, 92, 224, 0.4) !important;
+      background: rgba(107, 92, 224, 0.06) !important;
+      border-color: rgba(107, 92, 224, 0.3) !important;
+      color: var(--accent) !important;
     }
 
     .new-note-header-btn {
@@ -12350,109 +12371,66 @@
       margin: 0 !important;
     }
 
-    /* ── Roadmap Hero Card ── */
+    /* ── Minimal Subject Dashboard (Linear / Notion Style) ── */
     .roadmap-hero-card {
       background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px 24px;
+      border: 1px solid var(--border-soft);
+      border-radius: 12px;
+      padding: 16px 20px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      box-shadow: 0 1px 3px var(--shadow);
+      gap: 12px;
     }
 
     .roadmap-hero-top {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
       gap: 16px;
-      flex-wrap: wrap;
     }
 
     .roadmap-title-group {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 10px;
+      min-width: 0;
     }
 
     .roadmap-target-icon {
-      font-size: 32px;
+      font-size: 20px;
       line-height: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      filter: drop-shadow(0 2px 4px rgba(239, 68, 68, 0.2));
+      flex-shrink: 0;
     }
 
     .roadmap-title-details {
       display: flex;
       flex-direction: column;
       gap: 2px;
+      min-width: 0;
     }
 
     .roadmap-title {
-      font-size: 22px;
-      font-weight: 700;
+      font-size: 18px;
+      font-weight: 600;
       color: var(--text);
-      line-height: 1.2;
+      line-height: 1.25;
       margin: 0;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
       cursor: pointer;
-    }
-
-    .roadmap-subtitle {
-      font-size: 12.5px;
-      color: var(--muted);
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .roadmap-quote-pill {
-      font-size: 12px;
-      font-style: italic;
-      color: var(--text-secondary);
-      background: var(--bg-subtle, rgba(0, 0, 0, 0.03));
-      border: 1px solid var(--border);
-      padding: 6px 14px;
-      border-radius: 99px;
+      overflow: hidden;
+      text-overflow: ellipsis;
       white-space: nowrap;
     }
 
-    /* ── Progress Bar ── */
-    .roadmap-progress-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .roadmap-progress-labels {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 12.5px;
-    }
-
-    .roadmap-progress-title {
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    .roadmap-progress-stats {
-      font-weight: 700;
-      color: #3b82f6;
-    }
-    .roadmap-progress-stats span {
-      font-weight: 500;
+    .roadmap-subtitle {
+      font-size: 11.5px;
       color: var(--muted);
-      font-size: 12px;
+      font-weight: 500;
     }
 
     .roadmap-progress-track {
       width: 100%;
-      height: 8px;
+      height: 4px;
       background: var(--border-soft);
       border-radius: 99px;
       overflow: hidden;
@@ -12462,64 +12440,67 @@
       height: 100%;
       background: #3b82f6;
       border-radius: 99px;
-      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: width 0.3s ease;
     }
 
-    /* ── Filter Pills & Add Topic Row ── */
-    .roadmap-filter-tabs-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
+    /* Minimal Filter Segment Tabs */
     .roadmap-filter-tabs {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
       flex-wrap: wrap;
+      padding-top: 2px;
     }
 
     .roadmap-filter-tab {
-      font-size: 11px;
-      font-weight: 600;
-      padding: 3px 10px;
-      border-radius: 99px;
+      font-size: 11.5px;
+      font-weight: 500;
+      padding: 3px 9px;
+      border-radius: 6px;
       cursor: pointer;
       color: var(--muted);
-      background: var(--card);
-      border: 1px solid var(--border);
-      transition: all 0.15s ease;
+      background: transparent;
+      border: none;
+      transition: all 0.12s ease;
       user-select: none;
-      line-height: 1.4;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .roadmap-filter-tab span {
+      font-size: 10px;
+      opacity: 0.65;
     }
     .roadmap-filter-tab:hover {
       color: var(--text);
       background: var(--border-soft);
     }
     .roadmap-filter-tab.active {
-      color: #ffffff;
-      background: #3b82f6;
-      border-color: #3b82f6;
-      box-shadow: 0 1px 4px rgba(59, 130, 246, 0.25);
+      color: #2563eb;
+      background: rgba(37, 99, 235, 0.08);
+      font-weight: 600;
+    }
+    body.theme-dark .roadmap-filter-tab.active {
+      color: #60a5fa;
+      background: rgba(96, 165, 250, 0.12);
     }
 
     .roadmap-add-btn {
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 600;
-      padding: 4px 12px;
-      border-radius: 9999px;
+      padding: 5px 12px;
+      border-radius: 8px;
       cursor: pointer;
       color: var(--text);
       background: var(--card);
       border: 1px solid var(--border);
-      transition: all 0.15s ease;
+      transition: all 0.12s ease;
       user-select: none;
-      box-shadow: 0 1px 2px var(--shadow);
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .roadmap-add-btn:hover {
       background: var(--border-soft);
@@ -12530,66 +12511,83 @@
     /* ── Curriculum Table ── */
     .roadmap-table-container {
       background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
+      border: 1px solid var(--border-soft);
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 1px 3px var(--shadow);
     }
 
     .roadmap-table-head {
       display: grid;
-      grid-template-columns: 48px minmax(180px, 2fr) 120px 110px minmax(180px, 1.8fr);
-      padding: 10px 16px;
-      background: var(--bg-subtle, rgba(0, 0, 0, 0.02));
-      border-bottom: 1px solid var(--border);
-      font-size: 11.5px;
-      font-weight: 700;
+      grid-template-columns: 36px minmax(200px, 2fr) 110px 100px minmax(160px, 1.5fr);
+      padding: 8px 16px;
+      background: var(--bg-subtle, rgba(0, 0, 0, 0.015));
+      border-bottom: 1px solid var(--border-soft);
+      font-size: 11px;
+      font-weight: 600;
       color: var(--muted);
-      letter-spacing: 0.02em;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
 
     .roadmap-table-row {
       display: grid;
-      grid-template-columns: 48px minmax(180px, 2fr) 120px 110px minmax(180px, 1.8fr);
-      padding: 11px 16px;
+      grid-template-columns: 36px minmax(200px, 2fr) 110px 100px minmax(160px, 1.5fr);
+      padding: 10px 16px;
       align-items: center;
       border-bottom: 1px solid var(--border-soft);
       cursor: pointer;
-      transition: background 0.15s ease;
-      position: relative;
+      transition: background 0.12s ease;
     }
     .roadmap-table-row:last-child {
       border-bottom: none;
     }
     .roadmap-table-row:hover {
-      background: var(--accent-soft);
+      background: var(--hover-bg, rgba(0,0,0,0.025));
     }
     .roadmap-table-row.active-topic-row {
-      background: color-mix(in srgb, #3b82f6 8%, transparent);
+      background: rgba(37, 99, 235, 0.04);
     }
 
     .roadmap-col-num {
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 11.5px;
+      font-weight: 500;
       color: var(--muted);
+      font-variant-numeric: tabular-nums;
     }
     .roadmap-col-title {
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 600;
       color: var(--text);
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
       padding-right: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .roadmap-module-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 1px 5px;
+      border-radius: 4px;
+      background: var(--border-soft);
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+    .roadmap-col-status {
+      display: flex;
+      align-items: center;
     }
     .roadmap-col-date {
-      font-size: 12px;
-      color: var(--text-secondary);
+      font-size: 11.5px;
+      color: var(--muted);
       white-space: nowrap;
     }
     .roadmap-col-action {
-      font-size: 12.5px;
-      color: var(--text-secondary);
+      font-size: 12px;
+      color: var(--muted);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -12600,75 +12598,64 @@
     }
     .roadmap-col-action.action-active {
       color: #2563eb;
-      font-weight: 600;
+      font-weight: 500;
+    }
+    body.theme-dark .roadmap-col-action.action-active {
+      color: #60a5fa;
     }
 
-    /* ── Status Pill Badges ── */
+    /* Status Badges - Clean & Soft */
     .status-pill {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       font-size: 11px;
-      font-weight: 600;
-      padding: 3px 10px;
-      border-radius: 99px;
-      line-height: 1.3;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 6px;
+      line-height: 1.35;
       white-space: nowrap;
       cursor: pointer;
       user-select: none;
-      transition: all 0.15s ease;
+      transition: opacity 0.12s;
     }
     .status-pill:hover {
-      transform: translateY(-0.5px);
-      filter: brightness(0.96);
+      opacity: 0.85;
     }
     .status-pill.mastered {
-      background: #dcfce7;
-      color: #15803d;
-      border: 1px solid #86efac;
+      background: rgba(34, 197, 94, 0.12);
+      color: #16a34a;
     }
     .status-pill.in-progress {
-      background: #fef3c7;
-      color: #b45309;
-      border: 1px solid #fde68a;
+      background: rgba(245, 158, 11, 0.12);
+      color: #d97706;
     }
     .status-pill.review {
-      background: #f3e8ff;
-      color: #7e22ce;
-      border: 1px solid #d8b4fe;
+      background: rgba(168, 85, 247, 0.12);
+      color: #9333ea;
     }
     .status-pill.not-started {
       background: var(--border-soft);
       color: var(--muted);
-      border: 1px solid var(--border);
     }
-
     body.theme-dark .status-pill.mastered {
-      background: rgba(34, 197, 94, 0.15);
+      background: rgba(34, 197, 94, 0.18);
       color: #4ade80;
-      border-color: rgba(34, 197, 94, 0.3);
     }
     body.theme-dark .status-pill.in-progress {
-      background: rgba(245, 158, 11, 0.15);
+      background: rgba(245, 158, 11, 0.18);
       color: #fbbf24;
-      border-color: rgba(245, 158, 11, 0.3);
     }
     body.theme-dark .status-pill.review {
       background: rgba(168, 85, 247, 0.18);
       color: #c084fc;
-      border-color: rgba(168, 85, 247, 0.3);
-    }
-    body.theme-dark .status-pill.not-started {
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--muted);
-      border-color: var(--border);
     }
 
-    /* ── 3 Summary Action Cards ── */
+    /* ── Compact Summary Action Cards ── */
     .roadmap-action-cards {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
+      gap: 10px;
     }
     @media (max-width: 768px) {
       .roadmap-action-cards {
@@ -12678,41 +12665,46 @@
 
     .roadmap-action-card {
       background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px 18px;
+      border: 1px solid var(--border-soft);
+      border-radius: 10px;
+      padding: 10px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      box-shadow: 0 1px 3px var(--shadow);
+      gap: 10px;
+      transition: all 0.12s ease;
+      cursor: pointer;
+    }
+    .roadmap-action-card:hover {
+      border-color: var(--border);
+      background: var(--hover-bg, rgba(0,0,0,0.015));
+      transform: translateY(-1px);
     }
     .roadmap-action-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       min-width: 0;
     }
     .roadmap-card-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      font-size: 15px;
     }
     .roadmap-card-icon.blue {
-      background: rgba(59, 130, 246, 0.12);
+      background: rgba(59, 130, 246, 0.1);
       color: #2563eb;
     }
     .roadmap-card-icon.pink {
-      background: rgba(236, 72, 153, 0.12);
+      background: rgba(236, 72, 153, 0.1);
       color: #db2777;
     }
     .roadmap-card-icon.orange {
-      background: rgba(249, 115, 22, 0.12);
+      background: rgba(249, 115, 22, 0.1);
       color: #ea580c;
     }
     .roadmap-card-meta {
@@ -12721,69 +12713,28 @@
       min-width: 0;
     }
     .roadmap-card-title {
-      font-size: 11.5px;
-      font-weight: 600;
+      font-size: 10.5px;
+      font-weight: 500;
       color: var(--muted);
-      text-transform: capitalize;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
     }
     .roadmap-card-value {
-      font-size: 14.5px;
-      font-weight: 700;
+      font-size: 13px;
+      font-weight: 600;
       color: var(--text);
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    .roadmap-action-btn {
-      font-size: 11.5px;
-      font-weight: 600;
-      padding: 4px 12px;
-      border-radius: 9999px;
-      cursor: pointer;
-      border: none;
-      background: var(--accent-soft);
-      color: var(--accent);
-      transition: all 0.15s ease;
-      white-space: nowrap;
-    }
-    .roadmap-action-btn:hover {
-      background: var(--accent);
-      color: #ffffff;
-      transform: translateY(-1px);
-    }
-
-    /* ── Quick Tips Banner ── */
-    .roadmap-quick-tips {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .roadmap-tips-left {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-    }
-    .roadmap-tips-list {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
+    .roadmap-card-arrow {
       font-size: 12px;
-      color: var(--text-secondary);
+      color: var(--muted);
+      transition: transform 0.12s;
     }
-    .roadmap-tips-brand {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12.5px;
-      font-weight: 700;
-      color: var(--text);
-      white-space: nowrap;
+    .roadmap-action-card:hover .roadmap-card-arrow {
+      color: var(--accent);
+      transform: translateX(2px);
     }
 
     /* ── Topic Workspace & Top Bar ── */
@@ -13484,34 +13435,6 @@
       color: #93c5fd;
     }
 
-    /* Motivation Banner */
-    .topic-motivation-footer {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin-top: 16px;
-      font-size: 12.5px;
-      color: var(--text-secondary);
-      flex-wrap: wrap;
-    }
-    .topic-motivation-btn {
-      font-size: 12px;
-      font-weight: 700;
-      color: #ffffff;
-      background: linear-gradient(135deg, #a855f7, #6366f1);
-      padding: 6px 16px;
-      border-radius: 99px;
-      border: none;
-      box-shadow: 0 2px 8px rgba(168, 85, 247, 0.35);
-      white-space: nowrap;
-      cursor: pointer;
-    }
-
     /* Notes Layout (Spacious Full-Width Canvas + Collapsible Sidebar) */
     .notes-layout-grid {
       display: grid;
@@ -13571,8 +13494,7 @@
     }
     .learning-workspace.focus-mode .topic-top-bar,
     .learning-workspace.focus-mode .topic-hero-header,
-    .learning-workspace.focus-mode .topic-tab-bar,
-    .learning-workspace.focus-mode .topic-motivation-footer {
+    .learning-workspace.focus-mode .topic-tab-bar {
       display: none !important;
     }
     .learning-workspace.focus-mode .topic-notes-card {
@@ -15716,6 +15638,60 @@
       gap: 6px;
     }
 
+    /* 1.5 Hero Grid: Left Content (Focus Today / Overdue) + Right Sidebar (Calendar Heatmap) */
+    .home-hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 250px;
+      gap: 24px;
+      align-items: start;
+    }
+    .home-hero-main {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      min-width: 0;
+    }
+    .home-hero-side {
+      width: 250px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    @media (max-width: 768px) {
+      .home-hero-grid {
+        grid-template-columns: 1fr;
+      }
+      .home-hero-side {
+        width: 100%;
+        max-width: 280px;
+      }
+    }
+
+    .home-calendar-card {
+      background: var(--card);
+      border: 1px solid var(--border-soft);
+      border-radius: 16px;
+      padding: 14px 16px;
+      width: 250px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      box-sizing: border-box;
+      font-family: var(--font-sans);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .home-calendar-card:hover {
+      border-color: var(--border);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    }
+    body.theme-dark .home-calendar-card {
+      background: var(--card);
+      border-color: var(--border);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
+    }
+    body.theme-dark .home-calendar-card:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
     /* 2. Sections */
     .todoist-home-section {
       display: flex;
@@ -16728,6 +16704,15 @@
                       </div>
                     </li>
                     <li role="none">
+                      <div id="craft-nav-habits" class="craft-nav-item" onclick="switchNotebook('__habits')"
+                           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"
+                           title="Habits — track routines & streaks" role="button" tabindex="0" aria-label="View Habits">
+                        <svg class="craft-nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;flex-shrink:0;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3z"/></svg>
+                        <span style="flex:1;">Habits</span>
+                        <span class="craft-nav-count" id="count-nav-habits"></span>
+                      </div>
+                    </li>
+                    <li role="none">
                       <div id="craft-nav-all" class="craft-nav-item" onclick="switchNotebook('__all')"
                            onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}"
                            title="All Notes" role="button" tabindex="0" aria-label="View All Notes"
@@ -16943,7 +16928,7 @@
 
             <button id="craftMenuBtn" class="craft-header-btn craft-ai-header-btn" title="AI Assistant (⌘K)" aria-label="AI Assistant" onclick="toggleAiPopover()">
               <i data-lucide="sparkles" style="width: 14px; height: 14px;"></i>
-              <span>AI Assistant</span>
+              <span style="margin-left: 4px; font-size: 13px;">AI Assistant</span>
             </button>
 
             <div id="craftSortBtn" class="craft-header-btn" style="position: relative;" title="Sort Documents">
@@ -18047,6 +18032,10 @@
       activeNotebook = '__all';
       try { localStorage.setItem('thinking_active_notebook', '__all'); } catch(e) {}
     }
+    if (activeNotebook === 'habits') {
+      activeNotebook = '__habits';
+      try { localStorage.setItem('thinking_active_notebook', '__habits'); } catch(e) {}
+    }
     const BASE_NOTEBOOKS = [
       { key: "inbox", label: "Unsorted", icon: "inbox" }
     ];
@@ -18704,7 +18693,7 @@
       for (let i = 0; i < notes.length; i++) {
         const n = notes[i];
         if (n.archived) continue;
-        if (isUnifiedTasksNote(n) || n.type === 'learning-subject' || n.type === 'learning-page' || isLearningSubject(n) || isLearningTopic(n)) continue;
+        if (isUnifiedTasksNote(n) || isHabitTrackerNote(n) || n.type === 'learning-subject' || n.type === 'learning-page' || isLearningSubject(n) || isLearningTopic(n)) continue;
         const key = normalizeNotebookKey(getEffectiveNotebook(n));
         map[key] = (map[key] || 0) + 1;
       }
@@ -19487,7 +19476,7 @@
       }
 
       orderList.forEach(key => {
-        if (!key || seen.has(key) || key === 'tasks' || key === '__taskboards' || key === 'learning' || key === '__roadmaps' || key === '__learning') return;
+        if (!key || seen.has(key) || key === 'tasks' || key === '__taskboards' || key === 'learning' || key === '__roadmaps' || key === '__learning' || key === 'habits' || key === '__habits') return;
         seen.add(key);
         if (allDefsMap.has(key)) {
           const baseDef = allDefsMap.get(key);
@@ -19503,7 +19492,7 @@
 
       // Ensure custom notebooks not in order list are added
       (state.customNotebooks || []).forEach(key => {
-        if (!key || seen.has(key) || key === 'tasks' || key === '__taskboards' || key === 'learning' || key === '__roadmaps' || key === '__learning') return;
+        if (!key || seen.has(key) || key === 'tasks' || key === '__taskboards' || key === 'learning' || key === '__roadmaps' || key === '__learning' || key === 'habits' || key === '__habits') return;
         seen.add(key);
         defs.push({ key, label: formatNotebookLabel(key), icon: "folder" });
       });
@@ -19514,8 +19503,9 @@
       // NOTE: Do NOT mutate state.customNotebooks here — this is a read-only getter.
       const migratedKeys = [];
       (state.notes || []).forEach(n => {
-        if (n.archived || n.parentId || n.parentSubjectId) return;
+        if (n.archived || n.parentId || n.parentSubjectId || isHabitTrackerNote(n)) return;
         const key = normalizeNotebookKey(n.notebook);
+        if (key === 'habits' || key === '__habits') return;
         if (key && !seen.has(key)) {
           seen.add(key);
           migratedKeys.push(key);
@@ -19564,7 +19554,7 @@
       const subjectChildrenMap = {};
         (state.notes || []).forEach(n => {
           if (n.archived) return;
-          if (isUnifiedTasksNote(n)) return;
+          if (isUnifiedTasksNote(n) || isHabitTrackerNote(n)) return;
           if (n.type === 'learning-subject' || n.type === 'learning-page' || isLearningSubject(n) || isLearningTopic(n)) return;
           const pId = n.parentSubjectId || n.parentId;
           if (pId) {
@@ -19785,6 +19775,8 @@
         document.getElementById('craft-nav-roadmaps')?.classList.add('active');
       } else if (activeNotebook === '__taskboards' || activeNotebook === '__tasks') {
         document.getElementById('craft-nav-taskboards')?.classList.add('active');
+      } else if (activeNotebook === '__habits') {
+        document.getElementById('craft-nav-habits')?.classList.add('active');
       } else if (activeNotebook === '__calendar') {
         document.getElementById('craft-nav-calendar')?.classList.add('active');
       } else if (activeNotebook === '__continue_learning') {
@@ -20399,7 +20391,7 @@
     }
 
     function isSmartViewKey(key) {
-      return SMART_VIEWS.some((item) => item.key === key) || key === '__board';
+      return SMART_VIEWS.some((item) => item.key === key) || (typeof key === 'string' && key.startsWith('__'));
     }
 
     function getNoteChecklistStats(note) {
@@ -20656,10 +20648,10 @@
       });
 
       next.notebookOrder = Array.isArray(src.notebookOrder)
-        ? src.notebookOrder.map(n => String(n || "").trim().toLowerCase()).filter(n => Boolean(n) && n !== 'tasks' && n !== '__taskboards' && n !== 'learning' && n !== '__roadmaps' && n !== '__learning')
+        ? src.notebookOrder.map(n => String(n || "").trim().toLowerCase()).filter(n => Boolean(n) && n !== 'tasks' && n !== '__taskboards' && n !== 'learning' && n !== '__roadmaps' && n !== '__learning' && n !== 'habits' && n !== '__habits')
         : [];
       next.customNotebooks = Array.isArray(src.customNotebooks)
-        ? src.customNotebooks.map(n => String(n || "").trim().toLowerCase()).filter(n => Boolean(n) && n !== 'daily-notes' && n !== 'tasks' && n !== '__taskboards' && n !== 'learning' && n !== '__roadmaps' && n !== '__learning')
+        ? src.customNotebooks.map(n => String(n || "").trim().toLowerCase()).filter(n => Boolean(n) && n !== 'daily-notes' && n !== 'tasks' && n !== '__taskboards' && n !== 'learning' && n !== '__roadmaps' && n !== '__learning' && n !== 'habits' && n !== '__habits')
         : [];
       next.schemaVersion = Number(src.schemaVersion || THINKING_SCHEMA_VERSION);
       next.metadataUpdatedAt = Number(src.metadataUpdatedAt || 0);
@@ -20685,28 +20677,19 @@
         }
       }
 
-      // Auto-migrate Habit Tracker notes and ensure 'habits' folder exists
-      let hasHabitTracker = false;
+      // Habit Tracker notes: ensure isHabitTracker flag is set
       next.notes.forEach(note => {
         if (isHabitTrackerNote(note)) {
           note.isHabitTracker = true;
-          hasHabitTracker = true;
-          if (!note.notebook || note.notebook === 'daily-notes' || note.notebook === '') {
-            note.notebook = 'habits';
-          }
         }
       });
-      if (hasHabitTracker) {
-        const habitsKey = 'habits';
-        if (!next.customNotebooks.includes(habitsKey)) {
-          next.customNotebooks.push(habitsKey);
-        }
-        if (!next.notebookLabels[habitsKey]) {
-          next.notebookLabels[habitsKey] = 'Habits';
-        }
-        if (!next.notebookOrder.includes(habitsKey)) {
-          next.notebookOrder.push(habitsKey);
-        }
+
+      // Habits is now a first-class view under VIEWS (__habits), not a custom user folder.
+      // Clean up any legacy artificial 'habits' custom folder:
+      next.customNotebooks = (next.customNotebooks || []).filter(k => k !== 'habits' && k !== '__habits');
+      next.notebookOrder = (next.notebookOrder || []).filter(k => k !== 'habits' && k !== '__habits');
+      if (next.notebookLabels && next.notebookLabels['habits']) {
+        delete next.notebookLabels['habits'];
       }
 
       return next;
@@ -30164,7 +30147,7 @@ function customConfirm(message, options = {}) {
       }
 
       if (activeNotebook === '__board') {
-        activeNotebook = (n.type === 'daily-taskboard' && !isHabitTrackerNote(n)) ? '__taskboards' : ((n.type === 'learning-subject' || n.type === 'learning-page') ? '__roadmaps' : (n.notebook || (isHabitTrackerNote(n) ? 'habits' : 'inbox')));
+        activeNotebook = (n.type === 'daily-taskboard' && !isHabitTrackerNote(n)) ? '__taskboards' : ((n.type === 'learning-subject' || n.type === 'learning-page') ? '__roadmaps' : (isHabitTrackerNote(n) ? '__habits' : (n.notebook || 'inbox')));
         localStorage.setItem('thinking_active_notebook', activeNotebook);
       }
 
@@ -30303,12 +30286,12 @@ function customConfirm(message, options = {}) {
       }
       if (DOM.editorNotebook) {
         const pillWrap = DOM.editorNotebook.closest('.toolbar-folder-pill-wrap');
-        if (n.type === 'learning-subject' || n.type === 'learning-page' || isUnifiedTasksNote(n)) {
+        if (n.type === 'learning-subject' || n.type === 'learning-page' || isUnifiedTasksNote(n) || isHabitTrackerNote(n)) {
           if (pillWrap) pillWrap.style.display = 'none';
           DOM.editorNotebook.style.display = 'none';
         } else {
           if (pillWrap) pillWrap.style.display = 'flex';
-          const defaultFolder = isHabitTrackerNote(n) ? "habits" : "inbox";
+          const defaultFolder = 'inbox';
           renderNotebookDropdownOptions(n.notebook || defaultFolder);
           DOM.editorNotebook.value = n.notebook || defaultFolder;
           DOM.editorNotebook.style.display = '';
@@ -30368,10 +30351,14 @@ function customConfirm(message, options = {}) {
       if (window.lucide) lucide.createIcons({ root: DOM.editorBody?.closest('.sticky-panel') || document.body });
 
       // Auto-switch notebook view if the note is in a different one
-      const specialDashboardViews = ['__home', '__tasks', '__calendar', '__continue_learning', '__revision_due', '__open_doubts', '__roadmaps', '__learning', '__taskboards', '__all'];
+      const specialDashboardViews = ['__home', '__tasks', '__habits', '__calendar', '__continue_learning', '__revision_due', '__open_doubts', '__roadmaps', '__learning', '__taskboards', '__all'];
       if (isUnifiedTasksNote(n)) {
         if (!specialDashboardViews.includes(activeNotebook)) {
           activeNotebook = '__tasks';
+        }
+      } else if (isHabitTrackerNote(n)) {
+        if (!specialDashboardViews.includes(activeNotebook)) {
+          activeNotebook = '__habits';
         }
       } else if (n.type === 'learning-subject' || n.type === 'learning-page') {
         const eff = normalizeNotebookKey(getEffectiveNotebook(n));
@@ -30379,7 +30366,7 @@ function customConfirm(message, options = {}) {
           activeNotebook = eff;
         }
       } else {
-        const targetNotebook = normalizeNotebookKey(n.notebook) || (isHabitTrackerNote(n) ? 'habits' : 'inbox');
+        const targetNotebook = normalizeNotebookKey(n.notebook) || 'inbox';
         if (!specialDashboardViews.includes(activeNotebook) && activeNotebook !== targetNotebook && activeNotebook !== '__all') {
           activeNotebook = targetNotebook;
         }
@@ -30417,6 +30404,23 @@ function customConfirm(message, options = {}) {
       });
       setTimeout(doFocus, 80);
       setTimeout(doFocus, 300);
+      // Extra attempt after panel open transition fully completes (transition is 0.3s)
+      // Use transitionend for the most reliable timing, with a 500ms fallback
+      const _panelForFocus = document.getElementById('stickyPanel');
+      if (_panelForFocus) {
+        const _onTransitionEnd = (e) => {
+          if (e.propertyName === 'opacity' || e.propertyName === 'transform') {
+            _panelForFocus.removeEventListener('transitionend', _onTransitionEnd);
+            doFocus();
+          }
+        };
+        _panelForFocus.addEventListener('transitionend', _onTransitionEnd);
+        // Fallback in case transitionend doesn't fire
+        setTimeout(() => {
+          _panelForFocus.removeEventListener('transitionend', _onTransitionEnd);
+          doFocus();
+        }, 500);
+      }
       updateBreadcrumb();
       if (typeof renderDynamicContextChips === 'function') renderDynamicContextChips();
       if (typeof maybeShowNoteSummary === 'function') maybeShowNoteSummary(n);
@@ -32171,7 +32175,7 @@ function customConfirm(message, options = {}) {
 
 
     async function addSticky() {
-      if (activeNotebook === '__taskboards' || activeNotebook === '__tasks') {
+      if (activeNotebook === '__taskboards' || activeNotebook === '__tasks' || activeNotebook === '__habits') {
         createDailyTaskboard();
         return;
       }
@@ -34329,6 +34333,9 @@ function customConfirm(message, options = {}) {
       if (name === '__taskboards' || name === '__tasks') {
         document.getElementById('craft-nav-taskboards')?.classList.add('active');
       }
+      if (name === '__habits') {
+        document.getElementById('craft-nav-habits')?.classList.add('active');
+      }
       if (name === '__calendar') document.getElementById('craft-nav-calendar')?.classList.add('active');
       if (name === '__continue_learning') document.getElementById('craft-nav-continue-learning')?.classList.add('active');
       if (name === '__revision_due') document.getElementById('craft-nav-revision-due')?.classList.add('active');
@@ -34446,6 +34453,25 @@ function customConfirm(message, options = {}) {
           boardAddBtn.title = 'Add new Task';
           boardAddBtn.onclick = () => {
             if (typeof promptAddUnifiedTask === 'function') promptAddUnifiedTask();
+          };
+        }
+      } else if (activeNotebook === '__habits') {
+        if (newNoteBtn) {
+          newNoteBtn.style.display = 'flex';
+          newNoteBtn.disabled = false;
+          newNoteBtn.style.opacity = '1';
+          newNoteBtn.style.cursor = 'pointer';
+          newNoteBtn.title = '+ Add Habit Tracker';
+          const span = newNoteBtn.querySelector('span');
+          if (span) span.textContent = 'New Habit Tracker';
+          newNoteBtn.onclick = () => {
+            if (typeof createDailyTaskboard === 'function') createDailyTaskboard();
+          };
+        }
+        if (boardAddBtn) {
+          boardAddBtn.title = 'Add Habit Tracker';
+          boardAddBtn.onclick = () => {
+            if (typeof createDailyTaskboard === 'function') createDailyTaskboard();
           };
         }
       } else {
@@ -34598,6 +34624,8 @@ function customConfirm(message, options = {}) {
           titleEl.textContent = "Subjects";
         } else if (activeNotebook === "__taskboards" || activeNotebook === "__tasks") {
           titleEl.textContent = "Tasks";
+        } else if (activeNotebook === "__habits") {
+          titleEl.textContent = "Habits";
         } else if (activeNotebook === "__calendar") {
           titleEl.textContent = "Calendar";
         } else if (activeNotebook === "__continue_learning") {
@@ -34647,11 +34675,12 @@ function customConfirm(message, options = {}) {
           if (activeNotebook === "__archived") return n.archived;
           if (activeNotebook === "__roadmaps" || activeNotebook === "__learning") return isLearningSubject(n);
           if (activeNotebook === "__taskboards" || activeNotebook === "__tasks") return !n.archived && n.type === 'daily-taskboard';
+          if (activeNotebook === "__habits") return !n.archived && isHabitTrackerNote(n);
           if (activeNotebook === "__continue_learning") return !n.archived && isLearningSubject(n);
           if (activeNotebook === "__revision_due") return isTopicRevisionDue(n);
           if (activeNotebook === "__open_doubts") return !n.archived && (n.type === 'learning-subject' || n.type === 'learning-page') && Array.isArray(n.revisitItems) && n.revisitItems.some(isDoubtOpen);
           if (n.archived && activeNotebook !== "__archived") return false;
-          if (isLearningSubject(n) || isLearningTopic(n) || isUnifiedTasksNote(n)) return false;
+          if (isLearningSubject(n) || isLearningTopic(n) || isUnifiedTasksNote(n) || isHabitTrackerNote(n)) return false;
           return normalizeNotebookKey(getEffectiveNotebook(n)) === activeNotebook;
         }).length;
         countEl.textContent = count;
@@ -34737,6 +34766,9 @@ function customConfirm(message, options = {}) {
         tasksActiveCount = genTasks.filter(t => !t.done).length;
       }
       if (taskEl) taskEl.textContent = tasksActiveCount > 0 ? tasksActiveCount : '';
+      const habitsCount = unarchivedNotes.filter(isHabitTrackerNote).length;
+      const habitsEl = document.getElementById('count-nav-habits');
+      if (habitsEl) habitsEl.textContent = habitsCount > 0 ? habitsCount : '';
       const boardEl = document.getElementById('count-nav-board');
       if (boardEl) boardEl.textContent = boardCount > 0 ? boardCount : '';
       const contEl = document.getElementById('count-nav-continue-learning');
@@ -34758,6 +34790,7 @@ function customConfirm(message, options = {}) {
             activeNotebook !== "__pinned" && activeNotebook !== "__archived" &&
             activeNotebook !== "__roadmaps" && activeNotebook !== "__learning" &&
             activeNotebook !== "__taskboards" && activeNotebook !== "__tasks" &&
+            activeNotebook !== "__habits" &&
             activeNotebook !== "__calendar" && activeNotebook !== "__board" &&
             activeNotebook !== "__continue_learning" && activeNotebook !== "__revision_due" &&
             activeNotebook !== "__open_doubts") {
@@ -35000,6 +35033,8 @@ function customConfirm(message, options = {}) {
       }
       const moduleName = spotlightTopic ? (spotlightTopic.moduleName || spotlightTopic.parentModuleTitle || '') : '';
 
+      const calWidgetHtml = typeof window.renderHomeCalendarHtml === 'function' ? window.renderHomeCalendarHtml() : '';
+
       grid.style.opacity = '1';
       grid.innerHTML = `
         <div class="home-dashboard-container">
@@ -35024,9 +35059,12 @@ function customConfirm(message, options = {}) {
             </div>
           </div>
 
-          <!-- 2. Overdue Section if any -->
-          ${overdueTasks.length > 0 ? `
-            <div class="todoist-home-section">
+          <!-- Hero Grid: Tasks/Overdue on Left, Calendar Heatmap Widget on Right -->
+          <div class="home-hero-grid">
+            <div class="home-hero-main">
+              <!-- 2. Overdue Section if any -->
+              ${overdueTasks.length > 0 ? `
+                <div class="todoist-home-section">
               <div class="todoist-section-head">
                 <div class="todoist-section-title overdue-title">
                   <span>Overdue</span>
@@ -35132,9 +35170,16 @@ function customConfirm(message, options = {}) {
               </div>
             `}
           </div>
+        </div>
 
-          <!-- 4. Continue Learning Spotlight -->
-          <div class="todoist-home-section">
+        <!-- Right Side: Monthly Activity Heatmap Calendar Widget -->
+        <div id="homeCalendarWidgetContainer" class="home-hero-side">
+          ${calWidgetHtml}
+        </div>
+      </div>
+
+      <!-- 4. Continue Learning Spotlight -->
+      <div class="todoist-home-section">
             <div class="todoist-section-head">
               <div class="todoist-section-title">
                 <span>Continue Learning</span>
@@ -35265,6 +35310,10 @@ function customConfirm(message, options = {}) {
         </div>
       `;
       refreshIcons(grid);
+      const calBox = document.getElementById('homeCalendarWidgetContainer');
+      if (calBox && !calBox.innerHTML.trim() && typeof window.renderHomeCalendarHtml === 'function') {
+        calBox.innerHTML = window.renderHomeCalendarHtml();
+      }
     }
 
     function renderContinueLearningView(grid) {
@@ -38616,10 +38665,11 @@ function customConfirm(message, options = {}) {
           if (activeView === "__archived") return n.archived;
           if (activeView === "__roadmaps" || activeView === "__learning") return isLearningSubject(n);
           if (activeView === "__taskboards" || activeView === "__tasks") return !n.archived && n.type === 'daily-taskboard';
+          if (activeView === "__habits") return !n.archived && isHabitTrackerNote(n);
           
           const matchesArchive = showArchived ? n.archived : !n.archived;
           const matchesNotebook = normalizeNotebookKey(getEffectiveNotebook(n)) === activeView;
-          const isSpecialType = isLearningSubject(n) || isLearningTopic(n) || isUnifiedTasksNote(n);
+          const isSpecialType = isLearningSubject(n) || isLearningTopic(n) || isUnifiedTasksNote(n) || isHabitTrackerNote(n);
           return matchesArchive && matchesNotebook && !isSpecialType;
         })();
         return matchesView;
@@ -38668,7 +38718,7 @@ function customConfirm(message, options = {}) {
           const templateGrid = emptyState.querySelector("#emptyTemplateGrid");
 
           if (templateGrid) {
-            templateGrid.style.display = (search || activeView === "__archived" || activeView === "__pinned" || (activeView && !activeView.startsWith('__'))) ? "none" : "flex";
+            templateGrid.style.display = (search || activeView === "__archived" || activeView === "__pinned" || activeView === "__habits" || (activeView && !activeView.startsWith('__'))) ? "none" : "flex";
           }
 
           if (search) {
@@ -38709,6 +38759,15 @@ function customConfirm(message, options = {}) {
               if (emptyBtnEl) {
                 emptyBtnEl.style.display = "block";
                 emptyBtnEl.textContent = "+ Create Taskboard";
+                emptyBtnEl.onclick = () => createDailyTaskboard();
+              }
+            } else if (activeView === "__habits") {
+              if (emptyIconEl) emptyIconEl.textContent = "🔥";
+              if (emptyTextEl) emptyTextEl.textContent = "No Habit Trackers yet";
+              if (emptySubtextEl) emptySubtextEl.textContent = "Create your first habit tracker to build consistency and daily streaks.";
+              if (emptyBtnEl) {
+                emptyBtnEl.style.display = "block";
+                emptyBtnEl.textContent = "+ Create Habit Tracker";
                 emptyBtnEl.onclick = () => createDailyTaskboard();
               }
             } else if (activeView && !activeView.startsWith('__')) {
@@ -39538,6 +39597,8 @@ function customConfirm(message, options = {}) {
           if (activeNotebook === "__all") return !n.archived && (!n.parentId || search !== "");
           if (activeNotebook === "__archived") return n.archived;
           if (activeNotebook === "__pinned") return !n.archived && n.pinned;
+          if (activeNotebook === "__habits") return !n.archived && isHabitTrackerNote(n);
+          if (isHabitTrackerNote(n)) return false;
           
           const matchesNotebook = normalizeNotebookKey(getEffectiveNotebook(n)) === activeNotebook;
           return !n.archived && matchesNotebook;
@@ -44137,15 +44198,8 @@ function customConfirm(message, options = {}) {
         if (!boardTitle) return;
         boardTitle = boardTitle.trim();
       }
-      // Auto-create Habits folder if it doesn't exist
-      const habitsKey = 'habits';
-      if (!state.customNotebooks.includes(habitsKey)) {
-        state.customNotebooks.push(habitsKey);
-        state.notebookLabels[habitsKey] = 'Habits';
-        if (!state.notebookOrder.includes(habitsKey)) state.notebookOrder.push(habitsKey);
-        state.metadataUpdatedAt = Date.now();
-      }
-      const targetNotebook = (activeNotebook && !activeNotebook.startsWith('__')) ? activeNotebook : 'habits';
+      // Habits are a dedicated system view (__habits), not a custom folder
+      const targetNotebook = (activeNotebook && !activeNotebook.startsWith('__')) ? activeNotebook : '';
       const now = Date.now();
       const noteId = 'note_' + generateUUID();
       const boardNote = {
@@ -44395,23 +44449,49 @@ function customConfirm(message, options = {}) {
       return days;
     }
 
-    function getMonthlyStats(note) {
-      const tasks = note.tasks || [];
-      const total = tasks.length;
+    function getMonthlyStats(note, targetYear, targetMonth) {
       const now = new Date();
-      const year = now.getFullYear(), month = now.getMonth();
+      const year = (targetYear !== undefined && targetYear !== null) ? targetYear : now.getFullYear();
+      const month = (targetMonth !== undefined && targetMonth !== null) ? targetMonth : now.getMonth();
       const daysInMonth = new Date(year, month + 1, 0).getDate();
       const firstDayOfWeek = (new Date(year, month, 1).getDay() + 6) % 7;
       const todayKey = getLocalDateKey(now);
       const cells = [];
+
+      const isHome = (!note || note.id === '__home__' || note.id === 'sidebar_cal_temp');
+      let tasks = (note && note.tasks) ? note.tasks : [];
+
+      if (isHome && tasks.length === 0 && typeof state !== 'undefined' && state.notes) {
+        const tb = (state.notes || []).find(function(n) { return !n.archived && typeof isUnifiedTasksNote === 'function' && isUnifiedTasksNote(n); });
+        if (tb && tb.tasks) tasks = tb.tasks;
+      }
+
+      const total = tasks.length;
+      const allDated = (isHome && typeof getAllDatedTasks === 'function') ? getAllDatedTasks() : [];
+
       for (let i = 0; i < firstDayOfWeek; i++) cells.push(null);
       for (let d = 1; d <= daysInMonth; d++) {
         const key = year + '-' + String(month+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
-        const doneCnt = total > 0 ? tasks.filter(function(t) { return (t.doneHistory || {})[key] === true; }).length : 0;
-        const pct = total > 0 ? doneCnt / total : 0;
+        const habitDone = total > 0 ? tasks.filter(function(t) { return (t.doneHistory || {})[key] === true; }).length : 0;
+
+        let pct = 0;
+        if (isHome) {
+          const dayDated = allDated.filter(function(t) { return t.dueDate === key; });
+          const dayDatedDone = dayDated.filter(function(t) { return t.done; }).length;
+          const totalDayItems = total + dayDated.length;
+          const totalDayDone = habitDone + dayDatedDone;
+          if (totalDayItems > 0) {
+            pct = totalDayDone / totalDayItems;
+          } else if (dayDatedDone > 0) {
+            pct = 1;
+          }
+        } else {
+          pct = total > 0 ? habitDone / total : 0;
+        }
+
         cells.push({ day: d, key: key, pct: pct, isToday: key === todayKey, isFuture: key > todayKey });
       }
-      return { cells: cells, month: now.toLocaleString('default', { month: 'long', year: 'numeric' }) };
+      return { cells: cells, month: new Date(year, month, 1).toLocaleString('default', { month: 'long', year: 'numeric' }) };
     }
 
     // -- SVG Pie Chart ----------------------------------------
@@ -44451,81 +44531,235 @@ function customConfirm(message, options = {}) {
     // -- Monthly Heatmap ---------------------------------------
     function buildMonthlyHeatmap(monthData, noteId) {
       function colorForPct(pct, isFuture) {
-        if (isFuture) return '#F2F0EA';
-        if (pct === 0) return '#E8E4FA';
-        if (pct < 0.4) return '#C4BDF5';
-        if (pct < 0.75) return '#9A8FE8';
-        return '#6B5CE0';
+        const isDark = document.body.classList.contains('theme-dark');
+        if (isFuture) return isDark ? 'rgba(255, 255, 255, 0.08)' : '#F2F0EA';
+        if (pct === 0) return isDark ? 'rgba(130, 117, 250, 0.22)' : '#E8E4FA';
+        if (pct < 0.4) return isDark ? 'rgba(130, 117, 250, 0.42)' : '#C4BDF5';
+        if (pct < 0.75) return isDark ? 'rgba(130, 117, 250, 0.68)' : '#9A8FE8';
+        return isDark ? '#8275FA' : '#6B5CE0';
       }
-      function textColorForPct(pct, isFuture) { return (isFuture || pct < 0.75) ? 'var(--muted)' : 'white'; }
+      function textColorForPct(pct, isFuture) {
+        const isDark = document.body.classList.contains('theme-dark');
+        if (isFuture) return isDark ? 'var(--muted)' : 'var(--muted)';
+        if (pct >= 0.75) return 'white';
+        return isDark ? 'var(--text)' : 'var(--muted)';
+      }
       const dayLetters = ['M','T','W','T','F','S','S'];
       const headers = dayLetters.map(function(d) {
-        return '<div style="width:26px;height:16px;font-size:9px;text-align:center;color:var(--muted);font-weight:600;">' + d + '</div>';
+        return '<div style="height:16px;font-size:9px;text-align:center;color:var(--muted);font-weight:600;display:flex;align-items:center;justify-content:center;">' + d + '</div>';
       }).join('');
       const cells = monthData.cells.map(function(cell) {
-        if (!cell) return '<div style="width:26px;height:24px;"></div>';
+        if (!cell) return '<div style="height:24px;"></div>';
         const bg = colorForPct(cell.pct, cell.isFuture);
         const tc = textColorForPct(cell.pct, cell.isFuture);
         const todayRing = cell.isToday ? 'box-shadow:0 0 0 1.8px #6B5CE0, 0 0 0 3px var(--card);' : '';
-        const isClickable = !cell.isFuture && cell.pct > 0;
+        const isClickable = (noteId === '__home__' || noteId === 'sidebar_cal_temp') ? true : (!cell.isFuture && cell.pct > 0);
         const onclickAttr = isClickable ? ' onclick="showDayTasksSummary(\'' + noteId + '\',\'' + cell.key + '\')"' : '';
         const cursorStyle = isClickable ? 'cursor:pointer;' : 'cursor:default;';
-        return '<div title="' + cell.key + ': ' + Math.round(cell.pct*100) + '% complete"' + onclickAttr + ' style="width:26px;height:24px;border-radius:4.5px;background:' + bg + ';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;color:' + tc + ';' + todayRing + cursorStyle + 'transition:transform 0.15s;">' + cell.day + '</div>';
+        return '<div title="' + cell.key + ': ' + Math.round(cell.pct*100) + '% complete"' + onclickAttr + ' style="height:24px;border-radius:4.5px;background:' + bg + ';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;color:' + tc + ';' + todayRing + cursorStyle + 'transition:transform 0.15s;" onmouseover="if(this.style.cursor===\'pointer\')this.style.transform=\'scale(1.12)\'" onmouseout="this.style.transform=\'none\'">' + cell.day + '</div>';
       }).join('');
-      return '<div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:2px;">' + headers + cells + '</div>';
+      return '<div style="display:grid;grid-template-columns:repeat(7, 1fr);gap:3px;margin-top:2px;">' + headers + cells + '</div>';
     }
 
-
     function showDayTasksSummary(noteId, dateKey) {
-      const note = findStickyById(noteId);
-      if (!note) return;
-      const tasks = note.tasks || [];
-      const done = tasks.filter(function(t) { return (t.doneHistory || {})[dateKey] === true; });
-      const missed = tasks.filter(function(t) { return (t.doneHistory || {})[dateKey] !== true; });
+      let tasks = [];
+      let done = [];
+      let missed = [];
+      let scheduled = [];
+      const todayKey = getLocalDateKey();
+
+      if (noteId === '__home__' || noteId === 'sidebar_cal_temp' || !noteId) {
+        const allGeneral = typeof getAllGeneralTasks === 'function' ? getAllGeneralTasks() : [];
+        const allDated = typeof getAllDatedTasks === 'function' ? getAllDatedTasks() : [];
+
+        const seen = new Set();
+
+        allDated.forEach(function(t) {
+          if (t.dueDate === dateKey) {
+            seen.add(t.id);
+            const item = { label: t.text || t.label || 'Task', source: t.sourceTitle || t.parentTitle || 'Learning' };
+            if (t.done) done.push(item);
+            else if (dateKey < todayKey) missed.push(item);
+            else scheduled.push(item);
+          }
+        });
+
+        allGeneral.forEach(function(t) {
+          if (!seen.has(t.id)) {
+            if (t.doneHistory && t.doneHistory[dateKey] === true) {
+              seen.add(t.id);
+              done.push({ label: t.label || 'Task', source: t.boardTitle || 'Tasks' });
+            } else if (t.dueDate === dateKey) {
+              seen.add(t.id);
+              const item = { label: t.label || 'Task', source: t.boardTitle || 'Tasks' };
+              if (t.done) done.push(item);
+              else if (dateKey < todayKey) missed.push(item);
+              else scheduled.push(item);
+            }
+          }
+        });
+      } else {
+        const note = findStickyById(noteId);
+        if (note) {
+          tasks = note.tasks || [];
+          tasks.forEach(function(t) {
+            const isDone = (t.doneHistory || {})[dateKey] === true;
+            const item = { label: t.label || 'Task', source: note.title || 'Tasks' };
+            if (isDone) done.push(item);
+            else missed.push(item);
+          });
+        }
+      }
+
+      const totalItems = done.length + missed.length + scheduled.length;
+      const pct = (done.length + missed.length > 0)
+        ? Math.round((done.length / (done.length + missed.length)) * 100)
+        : (done.length > 0 ? 100 : 0);
+
       const d = new Date(dateKey + 'T00:00:00');
       const label = d.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-      const pct = tasks.length > 0 ? Math.round((done.length / tasks.length) * 100) : 0;
 
-      // Remove any existing popup
+      // Remove any existing popup & overlay
       const existingPop = document.getElementById('dtbDayPopup');
       if (existingPop) existingPop.remove();
+      const existingOverlay = document.getElementById('dtbDayOverlay');
+      if (existingOverlay) existingOverlay.remove();
 
       const popup = document.createElement('div');
       popup.id = 'dtbDayPopup';
-      popup.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.95);z-index:99998;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px 24px;min-width:280px;max-width:360px;box-shadow:0 16px 48px rgba(0,0,0,0.12);opacity:0;transition:all 0.25s cubic-bezier(0.16,1,0.3,1);font-family:var(--font-sans);';
+      popup.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.95);z-index:99998;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px 24px;min-width:290px;max-width:380px;box-shadow:0 16px 48px rgba(0,0,0,0.14);opacity:0;transition:all 0.25s cubic-bezier(0.16,1,0.3,1);font-family:var(--font-sans);';
+
+      let bodyHtml = '';
+      if (done.length > 0) {
+        bodyHtml += '<div style="margin-bottom:12px;">' +
+          '<div style="font-size:11px;font-weight:700;color:#2E9E68;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">✅ Done (' + done.length + ')</div>' +
+          done.map(function(t) { return '<div style="font-size:13px;color:var(--text);padding:4px 0;border-bottom:1px solid var(--border-soft);display:flex;justify-content:space-between;gap:8px;"><span>' + escHtmlDtb(t.label) + '</span><span style="font-size:11px;color:var(--muted);flex-shrink:0;">' + escHtmlDtb(t.source) + '</span></div>'; }).join('') +
+          '</div>';
+      }
+      if (scheduled.length > 0) {
+        bodyHtml += '<div style="margin-bottom:12px;">' +
+          '<div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">📅 Scheduled (' + scheduled.length + ')</div>' +
+          scheduled.map(function(t) { return '<div style="font-size:13px;color:var(--text);padding:4px 0;border-bottom:1px solid var(--border-soft);display:flex;justify-content:space-between;gap:8px;"><span>' + escHtmlDtb(t.label) + '</span><span style="font-size:11px;color:var(--muted);flex-shrink:0;">' + escHtmlDtb(t.source) + '</span></div>'; }).join('') +
+          '</div>';
+      }
+      if (missed.length > 0) {
+        bodyHtml += '<div style="margin-bottom:12px;">' +
+          '<div style="font-size:11px;font-weight:700;color:#DC4C3E;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">⬜ Missed (' + missed.length + ')</div>' +
+          missed.map(function(t) { return '<div style="font-size:13px;color:var(--muted);padding:4px 0;border-bottom:1px solid var(--border-soft);text-decoration:line-through;display:flex;justify-content:space-between;gap:8px;"><span>' + escHtmlDtb(t.label) + '</span><span style="font-size:11px;color:var(--muted);flex-shrink:0;">' + escHtmlDtb(t.source) + '</span></div>'; }).join('') +
+          '</div>';
+      }
+      if (totalItems === 0) {
+        bodyHtml += '<div style="font-size:12.5px;color:var(--muted);padding:14px 0 10px;text-align:center;">No task activity recorded for this date.</div>';
+      }
+
+      bodyHtml += '<div style="margin-top:14px;display:flex;gap:8px;">' +
+        '<button id="dtbDayCalJumpBtn" style="flex:1;padding:8px 12px;background:var(--accent);color:white;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">Open in Calendar →</button>' +
+        '</div>';
+
       popup.innerHTML =
         '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;">' +
           '<div>' +
-            '<div style="font-size:12px;font-weight:700;color:var(--accent);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:2px;">' + label + '</div>' +
-            '<div style="font-size:20px;font-weight:700;color:var(--text);letter-spacing:-0.03em;">' + pct + '% complete</div>' +
+            '<div style="font-size:11.5px;font-weight:700;color:var(--accent);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:2px;">' + label + '</div>' +
+            '<div style="font-size:19px;font-weight:700;color:var(--text);letter-spacing:-0.03em;">' + (totalItems > 0 ? pct + '% complete' : 'Calendar Overview') + '</div>' +
           '</div>' +
           '<button id="dtbDayCloseBtn" style="background:none;border:none;cursor:pointer;color:var(--muted);padding:4px;font-size:18px;line-height:1;">✕</button>' +
         '</div>' +
-        (done.length > 0 ?
-          '<div style="margin-bottom:10px;">' +
-          '<div style="font-size:11px;font-weight:700;color:#2E9E68;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">✅ Done (' + done.length + ')</div>' +
-          done.map(function(t) { return '<div style="font-size:13px;color:var(--text);padding:4px 0;border-bottom:1px solid var(--border-soft);">' + escHtmlDtb(t.label || 'Unnamed task') + '</div>'; }).join('') +
-          '</div>' : '') +
-        (missed.length > 0 ?
-          '<div>' +
-          '<div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">⬜ Missed (' + missed.length + ')</div>' +
-          missed.map(function(t) { return '<div style="font-size:13px;color:var(--muted);padding:4px 0;border-bottom:1px solid var(--border-soft);text-decoration:line-through;">' + escHtmlDtb(t.label || 'Unnamed task') + '</div>'; }).join('') +
-          '</div>' : '');
+        bodyHtml;
 
       const overlay = document.createElement('div');
       overlay.id = 'dtbDayOverlay';
-      overlay.style.cssText = 'position:fixed;inset:0;z-index:99997;background:rgba(0,0,0,0.15);';
+      overlay.style.cssText = 'position:fixed;inset:0;z-index:99997;background:rgba(0,0,0,0.25);backdrop-filter:blur(1.5px);';
       overlay.onclick = function() { popup.remove(); overlay.remove(); };
 
       document.body.appendChild(overlay);
       document.body.appendChild(popup);
       var closeBtn = document.getElementById('dtbDayCloseBtn');
       if (closeBtn) closeBtn.addEventListener('click', function() { popup.remove(); overlay.remove(); });
+      var jumpBtn = document.getElementById('dtbDayCalJumpBtn');
+      if (jumpBtn) jumpBtn.addEventListener('click', function() {
+        window._calSelectedDate = dateKey;
+        const parts = dateKey.split('-').map(Number);
+        if (parts[0] && parts[1]) {
+          window._calYear = parts[0];
+          window._calMonth = parts[1] - 1;
+        }
+        popup.remove();
+        overlay.remove();
+        switchNotebook('__calendar');
+      });
+
       requestAnimationFrame(function() {
         popup.style.opacity = '1';
         popup.style.transform = 'translate(-50%,-50%) scale(1)';
       });
     }
+
+    // -- Home Calendar Widget Helpers ---------------------------
+    window.renderHomeCalendarHtml = function() {
+      const now = new Date();
+      if (window._homeCalYear === undefined) window._homeCalYear = now.getFullYear();
+      if (window._homeCalMonth === undefined) window._homeCalMonth = now.getMonth();
+      const y = window._homeCalYear;
+      const m = window._homeCalMonth;
+
+      const allTaskboards = (state.notes || []).filter(function(n) { return !n.archived && (n.type === 'daily-taskboard' || (typeof isUnifiedTasksNote === 'function' && isUnifiedTasksNote(n))); });
+      let targetNote = allTaskboards[0] || { id: '__home__', tasks: [] };
+
+      const monthData = getMonthlyStats(targetNote, y, m);
+
+      return `
+        <div class="home-calendar-card">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+            <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text);">${monthData.month}</span>
+            <div style="display: flex; align-items: center; gap: 2px;">
+              <button onclick="navigateHomeCalendar(-1)" title="Previous Month" style="background: none; border: none; cursor: pointer; color: var(--muted); padding: 2px 5px; font-size: 13px; line-height: 1; border-radius: 4px; display: flex; align-items: center;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">‹</button>
+              <button onclick="navigateHomeCalendar(1)" title="Next Month" style="background: none; border: none; cursor: pointer; color: var(--muted); padding: 2px 5px; font-size: 13px; line-height: 1; border-radius: 4px; display: flex; align-items: center;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">›</button>
+              <button onclick="switchNotebook('__calendar')" title="Open Calendar View" style="background: none; border: none; cursor: pointer; color: var(--muted); padding: 2px 4px; font-size: 12px; line-height: 1; border-radius: 4px; display: flex; align-items: center; margin-left: 2px;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              </button>
+            </div>
+          </div>
+          ${buildMonthlyHeatmap(monthData, '__home__')}
+          <div style="display: flex; align-items: center; gap: 4px; margin-top: 8px; justify-content: flex-end;">
+            <span style="font-size: 9px; color: var(--muted);">Less</span>
+            <div style="width: 8px; height: 8px; border-radius: 2px; background: var(--cal-empty, #E8E4FA);"></div>
+            <div style="width: 8px; height: 8px; border-radius: 2px; background: var(--cal-lvl1, #C4BDF5);"></div>
+            <div style="width: 8px; height: 8px; border-radius: 2px; background: var(--cal-lvl2, #9A8FE8);"></div>
+            <div style="width: 8px; height: 8px; border-radius: 2px; background: var(--cal-lvl3, #6B5CE0);"></div>
+            <span style="font-size: 9px; color: var(--muted);">More</span>
+          </div>
+        </div>
+      `;
+    };
+
+    window.navigateHomeCalendar = function(delta) {
+      const now = new Date();
+      if (window._homeCalYear === undefined) window._homeCalYear = now.getFullYear();
+      if (window._homeCalMonth === undefined) window._homeCalMonth = now.getMonth();
+      let m = window._homeCalMonth + delta;
+      let y = window._homeCalYear;
+      if (m < 0) { m = 11; y--; }
+      else if (m > 11) { m = 0; y++; }
+      window._homeCalMonth = m;
+      window._homeCalYear = y;
+      const el = document.getElementById('homeCalendarWidgetContainer');
+      if (el) {
+        el.innerHTML = window.renderHomeCalendarHtml();
+      } else if (activeNotebook === '__home') {
+        renderHomeView(DOM.stickies);
+      }
+    };
+
+    window.getMonthlyStats = getMonthlyStats;
+    window.buildMonthlyHeatmap = buildMonthlyHeatmap;
+    window.showDayTasksSummary = showDayTasksSummary;
+
+    try {
+      const existingHomeCal = document.getElementById('homeCalendarWidgetContainer');
+      if (existingHomeCal && !existingHomeCal.innerHTML.trim()) {
+        existingHomeCal.innerHTML = window.renderHomeCalendarHtml();
+      }
+    } catch(e) {}
 
     function renameDailyTaskboard(noteId) {
       const note = findStickyById(noteId);
@@ -45119,57 +45353,19 @@ function customConfirm(message, options = {}) {
       container.innerHTML = `
         <div class="learning-workspace">
 
-          <!-- 1. Roadmap Hero Banner -->
+          <!-- 1. Minimal Header Card -->
           <div class="roadmap-hero-card">
             <div class="roadmap-hero-top">
               <div class="roadmap-title-group">
-                <div class="roadmap-target-icon">🎯</div>
+                <span class="roadmap-target-icon">🎯</span>
                 <div class="roadmap-title-details">
                   <h1 class="roadmap-title" ondblclick="renameLearningSubject('${note.id}')" title="Double-click to rename subject">
                     ${esc(note.title)}
                   </h1>
                   <div class="roadmap-subtitle">
-                    <span>Learn ➔ Practice ➔ Revise ➔ Master</span>
+                    ${childPages.length} topics · ${doneCount} mastered (${totalProgress}%)
                   </div>
                 </div>
-              </div>
-
-              <div class="roadmap-quote-pill">
-                “Consistency today creates confidence tomorrow.”
-              </div>
-            </div>
-
-            <!-- Overall Progress Bar -->
-            <div class="roadmap-progress-wrap">
-              <div class="roadmap-progress-labels">
-                <span class="roadmap-progress-title">Overall Progress</span>
-                <span class="roadmap-progress-stats">
-                  ${totalProgress}% <span>(${doneCount} of ${childPages.length} topics)</span>
-                </span>
-              </div>
-              <div class="roadmap-progress-track">
-                <div class="roadmap-progress-fill" style="width: ${totalProgress}%;"></div>
-              </div>
-            </div>
-
-            <!-- Filter Pills & Add Topic Button Row -->
-            <div class="roadmap-filter-tabs-row">
-              <div class="roadmap-filter-tabs">
-                <button class="roadmap-filter-tab ${window._learningAreaFilter === 'all' ? 'active' : ''}" onclick="setLearningAreaFilter('all', '${note.id}')">
-                  All (${childPages.length})
-                </button>
-                <button class="roadmap-filter-tab ${window._learningAreaFilter === 'not-started' ? 'active' : ''}" onclick="setLearningAreaFilter('not-started', '${note.id}')">
-                  Not Started (${notStartedCount})
-                </button>
-                <button class="roadmap-filter-tab ${window._learningAreaFilter === 'learning' ? 'active' : ''}" onclick="setLearningAreaFilter('learning', '${note.id}')">
-                  In Progress (${learningCount})
-                </button>
-                <button class="roadmap-filter-tab ${window._learningAreaFilter === 'revised' ? 'active' : ''}" onclick="setLearningAreaFilter('revised', '${note.id}')">
-                  Review (${revisedCount})
-                </button>
-                <button class="roadmap-filter-tab ${window._learningAreaFilter === 'understood' ? 'active' : ''}" onclick="setLearningAreaFilter('understood', '${note.id}')">
-                  Mastered (${doneCount})
-                </button>
               </div>
 
               <button class="roadmap-add-btn" onclick="createLearningPage('${note.id}')" title="Add new topic">
@@ -45177,13 +45373,37 @@ function customConfirm(message, options = {}) {
                 <span>Add Topic</span>
               </button>
             </div>
+
+            <!-- Sleek 4px Progress Track -->
+            <div class="roadmap-progress-track">
+              <div class="roadmap-progress-fill" style="width: ${totalProgress}%;"></div>
+            </div>
+
+            <!-- Minimal Filter Segment Tabs -->
+            <div class="roadmap-filter-tabs">
+              <button class="roadmap-filter-tab ${window._learningAreaFilter === 'all' ? 'active' : ''}" onclick="setLearningAreaFilter('all', '${note.id}')">
+                All <span>${childPages.length}</span>
+              </button>
+              <button class="roadmap-filter-tab ${window._learningAreaFilter === 'not-started' ? 'active' : ''}" onclick="setLearningAreaFilter('not-started', '${note.id}')">
+                Not Started <span>${notStartedCount}</span>
+              </button>
+              <button class="roadmap-filter-tab ${window._learningAreaFilter === 'learning' ? 'active' : ''}" onclick="setLearningAreaFilter('learning', '${note.id}')">
+                In Progress <span>${learningCount}</span>
+              </button>
+              <button class="roadmap-filter-tab ${window._learningAreaFilter === 'revised' ? 'active' : ''}" onclick="setLearningAreaFilter('revised', '${note.id}')">
+                Review <span>${revisedCount}</span>
+              </button>
+              <button class="roadmap-filter-tab ${window._learningAreaFilter === 'understood' ? 'active' : ''}" onclick="setLearningAreaFilter('understood', '${note.id}')">
+                Mastered <span>${doneCount}</span>
+              </button>
+            </div>
           </div>
 
-          <!-- 2. Curriculum Table (5 Columns) -->
+          <!-- 2. Clean Minimal Table (5 Properly Aligned Columns) -->
           <div class="roadmap-table-container">
             <div class="roadmap-table-head">
               <div>#</div>
-              <div>Topic / Subject</div>
+              <div>Topic</div>
               <div>Status</div>
               <div>Last Studied</div>
               <div>Next Action</div>
@@ -45204,8 +45424,9 @@ function customConfirm(message, options = {}) {
                        data-topic-id="${p.id}"
                        onclick="if(event.altKey){openNoteInTab('${p.id}');}else{openNoteEditor('${p.id}');}" 
                        oncontextmenu="showTopicContextMenu(event, '${p.id}')">
+                    <div class="roadmap-col-num">${numStr}</div>
                     <div class="roadmap-col-title" title="${esc(p.title)}">
-                      ${p.module ? `<span style="display:inline-block; font-size:10.5px; font-weight:600; padding:1px 6px; border-radius:4px; background:rgba(0,0,0,0.06); color:var(--text-muted, #64748b); margin-right:6px;">${esc(p.module)}</span>` : ''}
+                      ${p.module ? `<span class="roadmap-module-badge">${esc(p.module)}</span>` : ''}
                       <span>${esc(p.title)}</span>
                     </div>
                     <div class="roadmap-col-status">
@@ -45216,28 +45437,28 @@ function customConfirm(message, options = {}) {
                     <div class="roadmap-col-date">${lastStudiedStr}</div>
                     <div class="roadmap-col-action ${actionClass}">
                       <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${esc(nextAction)}</span>
-                      ${(s === 'learning' || isContinuing) ? '<i data-lucide="chevron-right" style="width:14px;height:14px;flex-shrink:0;"></i>' : ''}
+                      <i data-lucide="chevron-right" style="width:13px;height:13px;flex-shrink:0;opacity:0.4;"></i>
                     </div>
                   </div>
                 `;
               }).join('')}
 
               ${sortedPages.length === 0 ? `
-                <div class="empty-hint" style="padding:32px 16px; text-align:center; color:var(--muted);">
-                  No topics in this filter. Click <strong>+ Add Topic</strong> to get started.
+                <div class="empty-hint" style="padding:36px 16px; text-align:center; color:var(--muted); font-size:13px;">
+                  No topics in this view. Click <strong>+ Add Topic</strong> to get started.
                 </div>
               ` : ''}
             </div>
           </div>
 
-          <!-- 3. Bottom 3 Summary Action Cards -->
+          <!-- 3. Minimal Summary Stat Cards -->
           <div class="roadmap-action-cards">
             
             <!-- Card 1: Next Topic -->
-            <div class="roadmap-action-card">
+            <div class="roadmap-action-card" onclick="${continuePage ? `openNoteEditor('${continuePage.id}')` : `createLearningPage('${note.id}')`}" title="${continuePage ? 'Continue learning this topic' : 'Add a new topic'}">
               <div class="roadmap-action-left">
                 <div class="roadmap-card-icon blue">
-                  <i data-lucide="play" style="width:16px;height:16px;fill:currentColor;"></i>
+                  <i data-lucide="play" style="width:13px;height:13px;fill:currentColor;"></i>
                 </div>
                 <div class="roadmap-card-meta">
                   <span class="roadmap-card-title">Next Topic</span>
@@ -45246,58 +45467,37 @@ function customConfirm(message, options = {}) {
                   </span>
                 </div>
               </div>
-              ${continuePage ? `
-                <button class="roadmap-action-btn" onclick="openNoteEditor('${continuePage.id}')">Open ➔</button>
-              ` : `
-                <button class="roadmap-action-btn" onclick="createLearningPage('${note.id}')">+ Add</button>
-              `}
+              <span class="roadmap-card-arrow">➔</span>
             </div>
 
             <!-- Card 2: Open Doubts -->
-            <div class="roadmap-action-card">
+            <div class="roadmap-action-card" onclick="showDoubtsOverviewModal('${note.id}')" title="View all doubts">
               <div class="roadmap-action-left">
                 <div class="roadmap-card-icon pink">
-                  <i data-lucide="help-circle" style="width:16px;height:16px;"></i>
+                  <i data-lucide="help-circle" style="width:14px;height:14px;"></i>
                 </div>
                 <div class="roadmap-card-meta">
                   <span class="roadmap-card-title">Open Doubts</span>
                   <span class="roadmap-card-value">${allDoubts.length}</span>
                 </div>
               </div>
-              <button class="roadmap-action-btn" onclick="showDoubtsOverviewModal('${note.id}')">View ➔</button>
+              <span class="roadmap-card-arrow">➔</span>
             </div>
 
             <!-- Card 3: Revision Due -->
-            <div class="roadmap-action-card">
+            <div class="roadmap-action-card" onclick="setLearningAreaFilter('revised', '${note.id}')" title="Filter topics due for review">
               <div class="roadmap-action-left">
                 <div class="roadmap-card-icon orange">
-                  <i data-lucide="calendar" style="width:16px;height:16px;"></i>
+                  <i data-lucide="calendar" style="width:14px;height:14px;"></i>
                 </div>
                 <div class="roadmap-card-meta">
                   <span class="roadmap-card-title">Revision Due</span>
                   <span class="roadmap-card-value">${revisedCount} Topics</span>
                 </div>
               </div>
-              <button class="roadmap-action-btn" onclick="setLearningAreaFilter('revised', '${note.id}')">View ➔</button>
+              <span class="roadmap-card-arrow">➔</span>
             </div>
 
-          </div>
-
-          <!-- 4. Quick Tips Banner -->
-          <div class="roadmap-quick-tips">
-            <div class="roadmap-tips-left">
-              <div style="font-size:20px; line-height:1;">💡</div>
-              <div class="roadmap-tips-list">
-                <div style="font-weight:700; color:var(--text); margin-bottom:2px;">Quick Tips:</div>
-                <div>• Just open the <strong>next topic</strong> and follow the <strong>Next Action</strong>.</div>
-                <div>• Use the same 6-tab structure for every topic.</div>
-                <div>• Keep your notes short and practical.</div>
-              </div>
-            </div>
-            <div class="roadmap-tips-brand">
-              <i data-lucide="bar-chart-2" style="width:18px;height:18px;color:#10b981;"></i>
-              <span>Less organising. More learning.</span>
-            </div>
           </div>
 
         </div>
@@ -45487,20 +45687,6 @@ function customConfirm(message, options = {}) {
             ${renderActiveTopicTabContent(note, activeTab)}
           </div>
 
-          <!-- 5. Motivational Footer (Consistent Across All Topic Pages) -->
-          <div class="topic-motivation-footer">
-            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-              <span>🎯</span>
-              <strong style="color:var(--text);">One consistent structure for every topic</strong>
-              <span style="color:var(--muted);">|</span>
-              <span>Less thinking. More learning.</span>
-              <span style="color:var(--muted);">|</span>
-              <span style="font-size:12px; color:var(--text-secondary);">Open ➔ Follow Next Action ➔ Learn ➔ Take Notes ➔ Add Doubts ➔ Create Tasks ➔ Practice ➔ Add Q&A ➔ Move to Next Topic</span>
-            </div>
-            <button class="topic-motivation-btn" onclick="showThinkingToast('You are doing great! Keep learning 🚀')">
-              You've got this! 🚀
-            </button>
-          </div>
 
         </div>
       `;
