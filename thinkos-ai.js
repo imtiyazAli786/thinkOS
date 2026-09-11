@@ -1493,8 +1493,8 @@ function _showAskNotesContextBadge(activeNote) {
   badge.className = 'ask-notes-context-badge';
   badge.style.cssText = `
     display: flex; align-items: center; gap: 6px;
-    background: var(--accent-soft, rgba(37,99,235,0.07));
-    border: 1px solid var(--accent-border, rgba(37,99,235,0.15));
+    background: var(--accent-soft, rgba(107,92,224,0.07));
+    border: 1px solid var(--accent-border, rgba(107,92,224,0.15));
     border-radius: 8px; padding: 6px 10px;
     font-size: 11px; color: var(--text-secondary);
     margin-bottom: 4px; flex-shrink: 0;
@@ -1555,8 +1555,8 @@ function formatAskResponse(text) {
   const citationRegex = /\[Source:\s*([^\]]+)\]\(([^)]+)\)/gi;
   html = html.replace(citationRegex, (match, title, noteId) => {
     return `<span class="source-pill" onclick="toggleAiPopover(false); openNoteEditor('${noteId.trim()}');" style="
-      display: inline-flex; align-items: center; gap: 4px; background: rgba(37, 99, 235, 0.08);
-      color: rgb(37, 99, 235); border: 1px solid rgba(37, 99, 235, 0.15); border-radius: 12px;
+      display: inline-flex; align-items: center; gap: 4px; background: rgba(107, 92, 224, 0.08);
+      color: rgb(107, 92, 224); border: 1px solid rgba(107, 92, 224, 0.15); border-radius: 12px;
       padding: 1px 8px; font-size: 11px; font-weight: 500; cursor: pointer; margin: 0 2px;
       transition: all 0.15s ease; user-select: none;
     ">🔗 ${title.trim()}</span>`;
@@ -1566,8 +1566,8 @@ function formatAskResponse(text) {
   const noteLinkRegex = /\[([^\]]+)\]\(note:\/\/([^)]+)\)/gi;
   html = html.replace(noteLinkRegex, (match, title, noteId) => {
     return `<span class="source-pill" onclick="toggleAiPopover(false); openNoteEditor('${noteId.trim()}');" style="
-      display: inline-flex; align-items: center; gap: 4px; background: rgba(37, 99, 235, 0.08);
-      color: rgb(37, 99, 235); border: 1px solid rgba(37, 99, 235, 0.15); border-radius: 12px;
+      display: inline-flex; align-items: center; gap: 4px; background: rgba(107, 92, 224, 0.08);
+      color: rgb(107, 92, 224); border: 1px solid rgba(107, 92, 224, 0.15); border-radius: 12px;
       padding: 1px 8px; font-size: 11px; font-weight: 500; cursor: pointer; margin: 0 2px;
       transition: all 0.15s ease; user-select: none;
     ">🔗 ${title.trim()}</span>`;
@@ -1923,11 +1923,11 @@ async function _streamWriteResponse(prompt, contextItems, rawPrompt = false) {
 
       const confirmStrip = document.createElement('div');
       confirmStrip.className = 'ai-action-confirm-strip';
-      confirmStrip.style.cssText = 'margin-top:8px; padding:8px 10px; background:var(--card); border:1px solid var(--accent-border, rgba(99,102,241,0.25)); border-radius:8px; display:flex; align-items:center; gap:8px; font-size:11px;';
+      confirmStrip.style.cssText = 'margin-top:8px; padding:8px 10px; background:var(--card); border:1px solid var(--accent-border, rgba(107,92,224,0.25)); border-radius:8px; display:flex; align-items:center; gap:8px; font-size:11px;';
       confirmStrip.innerHTML = `
         <span style="flex:1; color:var(--text-secondary);">🤖 AI wants to: <strong style="color:var(--text);">${actionSummary}</strong></span>
         <button onclick="applyAiTaskboardActions(this, '${encodedActions}')"
-          style="background:var(--accent,#6366f1); color:#fff; border:none; border-radius:6px; padding:4px 10px; font-size:11px; font-weight:600; cursor:pointer; font-family:var(--font-sans);">
+          style="background:var(--accent,#6B5CE0); color:#fff; border:none; border-radius:6px; padding:4px 10px; font-size:11px; font-weight:600; cursor:pointer; font-family:var(--font-sans);">
           Apply ✓
         </button>
         <button onclick="this.parentElement.remove()"
@@ -1983,7 +1983,7 @@ async function _streamWriteResponse(prompt, contextItems, rawPrompt = false) {
     if (bubbleContainer) {
       const contentDiv = bubbleContainer.querySelector('.ai-response-content');
       if (contentDiv) {
-        contentDiv.innerHTML += `<br><span style="color:var(--danger)">⚠️ AI Error: ${error.message || "Request failed"}</span>`;
+        contentDiv.innerHTML += `<br><span style="color:var(--red)">⚠️ AI Error: ${error.message || "Request failed"}</span>`;
         const cursor = contentDiv.querySelector('.ai-cursor-blink');
         if (cursor) cursor.remove();
       }

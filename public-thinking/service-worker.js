@@ -1,4 +1,4 @@
-const CACHE_NAME = "thinkos-v31";
+const CACHE_NAME = "thinkos-v33";
 const MAX_CACHE_ENTRIES = 50;
 const APP_SHELL = [
   "./",

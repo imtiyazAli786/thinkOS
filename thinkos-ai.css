@@ -321,7 +321,7 @@ body.sidebar-minimized.ai-drawer-open .craft-main {
 }
 
 #aiPopover .ai-drawer-query button:hover {
-  background: #1d4ed8;
+  background: var(--accent-hover, #5A4CD6);
 }
 
 #aiPopover .ai-drawer-query button:active {
@@ -734,7 +734,7 @@ body.ai-fullscreen-mode > *:not(#aiPopover) {
   transition: background 0.15s ease !important;
 }
 .inline-ai-input-row button:hover {
-  background: var(--accent-hover, rgb(29, 78, 216)) !important;
+  background: var(--accent-hover, rgb(90, 76, 214)) !important;
 }
 
 /* Clean, Minimal AI Suggestion Banner */

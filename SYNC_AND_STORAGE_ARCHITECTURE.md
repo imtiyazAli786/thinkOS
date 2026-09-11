@@ -122,19 +122,21 @@ flowchart TD
 * **Location in Code:** Lines ~33400–33440 in `thinkOS.html`.
 * **Behavior:**
   1. Gathers all notes, board sticky cards, folders, labels, and idea inbox items.
-  2. Scans all image blocks across all notes.
-  3. Automatically resolves every image to its complete base64 data URL.
-  4. Bundles images into the `embeddedImages: { [imgKey]: base64Data }` object inside `thinkOS_backup_<date>.json`.
+  2. Scans all image blocks across all notes and board sticky cards (`card.images`).
+  3. Automatically resolves every image to its complete base64 data URL and embeds them with keys in `embeddedImages`.
+  4. Bundles images into the `embeddedImages: { [imgKey]: base64Data }` object inside `thinkOS_backup_<date>.json` (version 4).
   5. The exported file is 100% self-contained and portable offline.
 
 ### Import Backup (`importBackup()`)
-* **Location in Code:** Lines ~33445–33525 in `thinkOS.html`.
+* **Location in Code:** Lines ~33460–33720 in `thinkOS.html`.
 * **Behavior:**
   1. Validates the JSON schema.
-  2. Prompts user for confirmation with item counts.
-  3. Extracts all `embeddedImages` and writes them directly into `blobStore` (IndexedDB) and in-memory cache.
-  4. Automatically uploads any `fsimg_` documents to Firestore if connected to a new account.
-  5. Restores notes, folders, and board cards, triggering `flushFirestoreSave()`.
+  2. Opens the **Import Mode Dialog** presenting two options:
+     - 🟢 **Smart Merge (Recommended):** Compares note IDs and timestamps (`updatedAt`). Adds newly found notes, updates older notes, and keeps local notes intact without data loss. Unifies folders, board sticky cards, and inbox ideas.
+     - 🔴 **Replace All (Clean Restore):** Wipes local notes/folders and replaces them entirely with the backup contents (for disaster recovery).
+  3. Extracts all `embeddedImages` and writes them directly into `blobStore` (IndexedDB) and in-memory cache for instant offline rendering (zero Firebase quota consumed).
+  4. Resolves board card images (`boardimg_` keys) into base64 data URLs.
+  5. Saves local state and flushes to Firestore if signed in.
 
 ---
 

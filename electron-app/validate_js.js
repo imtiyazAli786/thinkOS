@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
 
-const htmlPath = '/Users/personal/Documents/WebApplications/Focused-Dashboard/FocusThinking/FocusThinking.html';
+const htmlPath = path.join(__dirname, 'thinkOS.html');
 const htmlContent = fs.readFileSync(htmlPath, 'utf8');
 
 // Extract all <script> blocks
