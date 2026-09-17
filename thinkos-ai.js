@@ -34,6 +34,9 @@ window.runInlineAi = runInlineAi;
 window.generateDailyDigest = generateDailyDigest;
 window.insertAiBubbleToNote = insertAiBubbleToNote;
 window.onAiProviderChange = onAiProviderChange;
+window.generateAiTopicTakeaways = generateAiTopicTakeaways;
+window.expandTakeawayWithAi = expandTakeawayWithAi;
+window.insertDeepDiveBlock = insertDeepDiveBlock;
 
 /* --- State & Config --- */
 let activeAiDrawerTab = 'write';
@@ -2658,6 +2661,176 @@ function dismissTagSuggestions() {
     summaryBar.classList.add('hidden');
     summaryBar.innerHTML = '';
   }
+}
+
+async function generateAiTopicTakeaways(noteId, triggerBtn) {
+  const note = (typeof findStickyById === 'function') ? findStickyById(noteId) : null;
+  if (!note) return;
+  const text = (typeof getNotePlainText === 'function') ? getNotePlainText(note) : '';
+  if (!text || text.trim().length < 10) {
+    alert("Please add some notes to this topic first so AI can extract key takeaways.");
+    return;
+  }
+
+  const origHtml = triggerBtn ? triggerBtn.innerHTML : '';
+  if (triggerBtn) {
+    triggerBtn.disabled = true;
+    triggerBtn.innerHTML = `<span>⏳</span> Extracting...`;
+  }
+
+  const prompt = `You are a learning and cognitive science expert. Analyze the following topic notes and extract 3 to 5 high-impact, actionable "Key Takeaways" or "Golden Rules".
+Topic Title: "${note.title || 'Untitled'}"
+Content:
+${text.slice(0, 4000)}
+
+Guidelines:
+- Each takeaway must be a single powerful sentence or rule of thumb.
+- Focus on mental models, core principles, counter-intuitive insights, and exam/practical golden rules.
+- Format: Return ONLY a numbered list from 1 to 5 (e.g. "1. ... \n2. ..."). No introductions, no commentary.`;
+
+  try {
+    const payload = { query: prompt, mode: "chat", contextItems: [] };
+    const response = await callAiEndpoint("/api/ai/query", payload);
+    let answer = response.answer || "";
+    answer = answer.replace(/<details>[\s\S]*?<\/details>/gi, '').trim();
+
+    const lines = answer.split('\n')
+      .map(l => l.replace(/^\d+[\.\)]\s*/, '').replace(/^[•\-\*]\s*/, '').trim())
+      .filter(l => l.length > 5);
+
+    if (lines.length > 0) {
+      if (!Array.isArray(note.takeaways)) note.takeaways = [];
+      lines.forEach(item => {
+        if (!note.takeaways.includes(item)) {
+          note.takeaways.push(item);
+        }
+      });
+      note.updatedAt = Date.now();
+      if (typeof craftSave === 'function') craftSave();
+      else if (typeof save === 'function') save({ debounced: true });
+
+      if (typeof renderLearningPageWorkspace === 'function') {
+        renderLearningPageWorkspace(note);
+      }
+      if (typeof showThinkingToast === 'function') {
+        showThinkingToast(`✨ Extracted ${lines.length} key takeaways!`);
+      }
+    } else {
+      alert("Could not extract takeaways from the text.");
+    }
+  } catch (err) {
+    console.error("[AI Takeaways Error]", err);
+    alert("Failed to extract takeaways: " + (err.message || 'AI request error'));
+  } finally {
+    if (triggerBtn) {
+      triggerBtn.disabled = false;
+      triggerBtn.innerHTML = origHtml;
+    }
+  }
+}
+
+async function expandTakeawayWithAi(noteId, idx) {
+  const note = (typeof findStickyById === 'function') ? findStickyById(noteId) : null;
+  if (!note || !note.takeaways || note.takeaways[idx] === undefined) return;
+  const takeawayText = note.takeaways[idx];
+
+  const overlay = document.createElement('div');
+  overlay.className = 'learning-modal-overlay';
+  overlay.innerHTML = `
+    <div class="learning-modal" style="width: 540px; max-height: 85vh; display:flex; flex-direction:column;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid var(--border-soft); padding-bottom:8px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:18px;">✨</span>
+          <h2 style="margin:0; font-size:15px; color:#d97706;">AI Takeaway Deep-Dive</h2>
+        </div>
+        <button class="learning-modal-btn secondary" style="padding:2px 8px; font-size:12px;" onclick="this.closest('.learning-modal-overlay').remove()">✕</button>
+      </div>
+
+      <div style="background:rgba(245,158,11,0.08); border-left:3px solid #f59e0b; border-radius:8px; padding:10px 12px; margin-bottom:12px; font-weight:600; font-size:13px; color:var(--text);">
+        "${(typeof esc === 'function') ? esc(takeawayText) : takeawayText}"
+      </div>
+
+      <div id="aiDeepDiveResult" style="flex:1; overflow-y:auto; padding:4px; font-size:13px; line-height:1.6; color:var(--text);">
+        <div style="display:flex; align-items:center; gap:8px; padding:20px 0; justify-content:center; color:var(--muted);">
+          <div class="ai-loading-dots" style="display:flex;gap:4px;">
+            <span style="width:6px;height:6px;border-radius:50%;background:#f59e0b;animation:pulse 1s infinite alternate;"></span>
+            <span style="width:6px;height:6px;border-radius:50%;background:#f59e0b;animation:pulse 1s infinite alternate;animation-delay:0.2s;"></span>
+            <span style="width:6px;height:6px;border-radius:50%;background:#f59e0b;animation:pulse 1s infinite alternate;animation-delay:0.4s;"></span>
+          </div>
+          <span>Generating conceptual intuition & mental models...</span>
+        </div>
+      </div>
+
+      <div class="learning-modal-actions" style="margin-top:12px; border-top:1px solid var(--border-soft); padding-top:10px; display:flex; justify-content:space-between; align-items:center;">
+        <button id="aiInsertDeepDiveBtn" class="learning-modal-btn" style="display:none; background:var(--text); color:var(--bg-main, #fff); font-weight:600;" onclick="insertDeepDiveBlock('${noteId}', this)">
+          + Insert into Notes
+        </button>
+        <button class="learning-modal-btn secondary" onclick="this.closest('.learning-modal-overlay').remove()">Close</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  const prompt = `Topic: "${note.title || 'Untitled'}"
+Key Takeaway / Golden Rule: "${takeawayText}"
+
+Provide a deep conceptual breakdown of this golden rule formatted in clean markdown:
+### 🧠 Core Intuition & Mechanism
+Explain WHY this rule holds true in 2-3 clear sentences.
+
+### ⚙️ Practical Example / Mental Model
+Give a memorable real-world analogy or concrete practical scenario.
+
+### ⚠️ Common Trap / Misconception
+What mistake do people frequently make regarding this rule?
+
+Keep it punchy, insightful, and memorable.`;
+
+  try {
+    const response = await callAiEndpoint("/api/ai/query", { query: prompt, mode: "chat", contextItems: [] });
+    let answer = response.answer || "Could not generate deep dive.";
+    answer = answer.replace(/<details>[\s\S]*?<\/details>/gi, '').trim();
+
+    const resultDiv = overlay.querySelector('#aiDeepDiveResult');
+    const insertBtn = overlay.querySelector('#aiInsertDeepDiveBtn');
+    if (resultDiv) {
+      const parsed = (typeof marked !== 'undefined') ? marked.parse(answer) : ((typeof formatAskResponse === 'function') ? formatAskResponse(answer) : answer);
+      resultDiv.innerHTML = parsed;
+      overlay._rawDeepDiveMarkdown = answer;
+      if (insertBtn) insertBtn.style.display = 'inline-flex';
+    }
+  } catch (err) {
+    const resultDiv = overlay.querySelector('#aiDeepDiveResult');
+    if (resultDiv) {
+      resultDiv.innerHTML = `<div style="color:#ef4444; padding:12px;">Failed to generate deep dive: ${err.message || 'Request error'}</div>`;
+    }
+  }
+}
+
+function insertDeepDiveBlock(noteId, btn) {
+  const overlay = btn ? btn.closest('.learning-modal-overlay') : null;
+  const rawText = overlay ? overlay._rawDeepDiveMarkdown : '';
+  if (!rawText) return;
+
+  const note = (typeof findStickyById === 'function') ? findStickyById(noteId) : null;
+  if (!note) return;
+  if (!note.blocks) note.blocks = [];
+
+  const newBlock = (typeof createNewBlockObj === 'function') ? createNewBlockObj("text") : { id: 'blk_' + Date.now(), type: 'text', content: '' };
+  newBlock.content = `> 💡 **Deep-Dive:**\n\n` + rawText;
+  note.blocks.push(newBlock);
+  note.updatedAt = Date.now();
+  if (typeof craftSave === 'function') craftSave();
+  else if (typeof save === 'function') save({ debounced: true });
+
+  btn.innerHTML = '<span>✅</span> Inserted!';
+  btn.disabled = true;
+  setTimeout(() => {
+    if (overlay) overlay.remove();
+    if (typeof renderLearningPageWorkspace === 'function') {
+      renderLearningPageWorkspace(note);
+    }
+  }, 800);
 }
 
 

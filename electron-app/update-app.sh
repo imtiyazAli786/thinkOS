@@ -29,6 +29,10 @@ fi
 # Optionally install to Applications
 if [[ "$1" == "--install" || "$2" == "--install" ]]; then
   echo "📦 Installing to Applications..."
+  # Quit running thinkOS instances if any
+  pkill -f "thinkOS" 2>/dev/null || true
+  sleep 1
+
   # Clean old Thinking Zone
   rm -rf "/Applications/Thinking Zone.app" 2>/dev/null || true
   rm -rf "$HOME/Applications/Thinking Zone.app" 2>/dev/null || true
